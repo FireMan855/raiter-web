@@ -1,0 +1,22 @@
+.auth.theme-two .auto-form-wrapper {
+    padding: 0 !important;
+}
+
+    .auth.theme-two .auto-form-wrapper form {
+        width: 95% !important;
+    }
+
+.terminoscondiciones {
+    justify-content: center;
+    display: flex;
+}
+
+.login-container {
+    max-width: none !important;
+    position: relative;
+}
+
+.inline-checkbox {
+    display: flex;
+    justify-content: center
+}

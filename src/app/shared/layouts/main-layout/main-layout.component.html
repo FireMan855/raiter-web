@@ -1,0 +1,178 @@
+<nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <a class="navbar-brand brand-logo" href="/">
+            <img src="assets/imagenes/raiter-logo-completo-negro.svg" alt="logo" />
+        </a>
+        <a class="navbar-brand brand-logo-mini" href="/">
+            <img src="assets/imagenes/raiter-logo-negro.svg" alt="logo" />
+        </a>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-center">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" (click)="abrirCerrarMenuIzquierdo()">
+            <!--<span class="mdi mdi-menu"></span>-->
+            <i class="fas fa-bars"></i>
+        </button>
+        
+                <ul class="navbar-nav">
+
+                <li class="nav-item font-weight-semibold d-none d-lg-block">Help : +050 2992 709</li>
+                <li class="nav-item dropdown language-dropdown">
+                    <a class="nav-link px-2 d-flex align-items-center" id="LanguageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <div class="d-inline-flex mr-0 mr-md-3">
+                            <div class="flag-icon-holder">
+                                <i class="flag-icon flag-icon-us"></i>
+                            </div>
+                        </div>
+                        <span class="profile-text font-weight-medium d-none d-md-block">English</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left navbar-dropdown py-2" aria-labelledby="LanguageDropdown">
+                        <a class="dropdown-item">
+                            <div class="flag-icon-holder">
+                                <i class="flag-icon flag-icon-us"></i>
+                            </div>English
+                        </a>
+                        <a class="dropdown-item">
+                            <div class="flag-icon-holder">
+                                <i class="flag-icon flag-icon-fr"></i>
+                            </div>French
+                        </a>
+                        <a class="dropdown-item">
+                            <div class="flag-icon-holder">
+                                <i class="flag-icon flag-icon-ae"></i>
+                            </div>Arabic
+                        </a>
+                        <a class="dropdown-item">
+                            <div class="flag-icon-holder">
+                                <i class="flag-icon flag-icon-ru"></i>
+                            </div>Russian
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <form class="ml-auto search-form d-none d-md-block" action="#">
+                <div class="form-group">
+                    <input type="search" class="form-control" placeholder="Search Here">
+                </div>
+            </form>
+        
+        <ul class="navbar-nav ml-auto">
+            <!--@if (User.Identity.IsAuthenticated)
+            {-->
+                <li class="nav-item dropdown d-none">
+                    <a class="nav-link count-indicator" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                        <i class="mdi mdi-bell-outline"></i>
+                        <span class="count">7</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
+                        <a class="dropdown-item py-3">
+                            <p class="mb-0 font-weight-medium float-left">You have 7 unread mails </p>
+                            <span class="badge badge-pill badge-primary float-right">View all</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="" alt="image" class="img-sm profile-pic">
+                            </div>
+                            <div class="preview-item-content flex-grow py-2">
+                                <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
+                                <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="" alt="image" class="img-sm profile-pic">
+                            </div>
+                            <div class="preview-item-content flex-grow py-2">
+                                <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
+                                <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                            </div>
+                        </a>
+                        <a class="dropdown-item preview-item">
+                            <div class="preview-thumbnail">
+                                <img src="" alt="image" class="img-sm profile-pic">
+                            </div>
+                            <div class="preview-item-content flex-grow py-2">
+                                <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
+                                <p class="font-weight-light small-text"> The meeting is cancelled </p>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link count-indicator" id="notificaciones" href="#" data-toggle="dropdown">
+                        <i class="fas fa-bell"></i>
+                        <span class="count bg-danger" id="spanCountNotificaciones">0</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificaciones" id="divNotificaciones">
+                        <div id="divScrollNotificaciones">
+                            <div id="divContenidoScrollNoticiaciones"></div>
+                        </div>
+                        <a class="dropdown-item py-3 border-bottom" asp-controller="Usuario" asp-action="MisNotificaciones">
+                            <p class="mb-0 font-weight-medium float-left">Notificaciones </p>
+                            <span class="badge badge-pill badge-primary float-right">Ver todas</span>
+                        </a>
+                        <a class="dropdown-item preview-item py-3">
+                                <div class="preview-thumbnail">
+                                    <i class="mdi mdi-alert m-auto text-primary"></i>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
+                                    <p class="font-weight-light small-text mb-0"> Just now </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item py-3">
+                                <div class="preview-thumbnail">
+                                    <i class="mdi mdi-settings m-auto text-primary"></i>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                                    <p class="font-weight-light small-text mb-0"> Private message </p>
+                                </div>
+                            </a>
+                            <a class="dropdown-item preview-item py-3">
+                                <div class="preview-thumbnail">
+                                    <i class="mdi mdi-airballoon m-auto text-primary"></i>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
+                                    <p class="font-weight-light small-text mb-0"> 2 days ago </p>
+                                </div>
+                            </a>
+                    </div>
+                </li>
+            <!--}-->
+            <app-logged-user></app-logged-user>
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-xl-none align-self-center" type="button" data-toggle="offcanvas" (click)="abrirCerrarMenuDerecho()">
+            <!--<span class="mdi mdi-menu"></span>-->
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+<!-- partial -->
+<div class="container-fluid page-body-wrapper">
+    <app-main-menu></app-main-menu>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <router-outlet></router-outlet>
+            <!-- content-wrapper ends -->
+            <!-- partial:partials/_footer.html -->
+            <footer class="footer">
+                    <div class="container-fluid clearfix">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019 <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights reserved.</span>
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                            Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i>
+                        </span>
+                    </div>
+                </footer>
+            <!-- partial -->
+        </div>
+        <div class="text-right mr-4">
+            <p class="">
+                desarrollado por <a href="http://sivirtual.com.mx">sivirtual.com.mx</a> &reg;
+            </p>
+        </div>
+        <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+</div>

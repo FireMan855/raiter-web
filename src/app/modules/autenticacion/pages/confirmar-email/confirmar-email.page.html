@@ -1,0 +1,26 @@
+<div class="row mb-3">
+    <div class="col-12">
+        <h4><i class="fas fa-at"></i> Confirmación de email</h4>
+    </div>
+</div>
+<div class="row" *ngIf="!respuesta else postRespuesta">
+    <div class="col-12">
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-check-info"></i> Confirmando e-mail
+        </div>
+        <!--<div class="@(Model.Exito ? "alert alert-success" : "alert alert-danger")" role="alert">
+            <i class="@(Model.Exito ? "fas fa-check-circle" : "fas fa-exclamation-triangle")"></i> @Model.Mensaje
+        </div>-->
+    </div>
+</div>
+<ng-template #postRespuesta>
+    <div class="alert" [ngClass]="{ 'alert-success' : respuesta?.Exito, 'alert-danger': !respuesta?.Exito }">
+        <!--<i [ngClass]="{'fas fa-check' : respuesta?.Exito, 'fas fa-exclamation-triangle' : ! respuesta?.Exito}"></i>--> 
+        <i *ngIf="respuesta?.Exito" class="fas fa-check-circle"></i><i *ngIf="!respuesta?.Exito" class="fas fa-exclamation-triangle"></i> {{ respuesta?.Mensaje }}
+        <div class="row mt-3" *ngIf="respuesta?.Exito">
+            <div class="col text-center">
+                <dx-button type="normal" icon="fas fa-sign-in" text="Iniciar sesión" (onClick)="iniciarSesion()"></dx-button>
+            </div>
+        </div>
+    </div>
+</ng-template>

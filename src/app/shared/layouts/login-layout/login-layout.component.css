@@ -1,0 +1,10 @@
+.auth.theme-two .auto-form-wrapper {
+    padding: 0 !important;
+}
+    .auth.theme-two .auto-form-wrapper .login-container {
+        width: 95% !important;
+    }
+.login-container {
+    max-width: none !important;
+    position: relative;
+}

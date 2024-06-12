@@ -1,0 +1,21 @@
+.btnTransportistaContainer {
+    margin-bottom: 25px;
+}
+
+.btnSerTransportista {
+    background-color: #f04167;
+    border: 0;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    font-weight: 500;
+    border-radius: 20px;
+    color: white !important;
+}
+
+    .btnSerTransportista:hover, .btnSerTransportista:focus {
+        background-color: #f26685;
+    }
+
+    .btnSerTransportista:active {
+        background-color: #f26685 !important;
+    }

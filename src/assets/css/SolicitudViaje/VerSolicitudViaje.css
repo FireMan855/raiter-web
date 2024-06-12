@@ -1,0 +1,144 @@
+﻿.timeline-area{
+    position: relative;
+    margin: 0px auto;
+    /*padding: 20px 0;*/
+    box-sizing: border-box;
+}
+.timeline-area ul{
+    margin:0;
+    padding:0;
+}
+.timeline-area ul li{
+    list-style: none;
+    position: relative;
+    width: 50%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+}
+.timeline-area:before{
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: #c5c5c5;
+}
+.timeline-area ul li:nth-child(odd){
+    float: left;
+    text-align: right;
+    clear: both;
+}
+.timeline-area ul li:nth-child(even){
+    float: right;
+    text-align: left;
+    clear: both
+}
+    .timeline-area ul li:nth-child(odd):before {
+        content: '';
+        position: absolute;
+        top: 24px;
+        right: -6px;
+        width: 10px;
+        height: 10px;
+        background: rgb(240, 65, 103);
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px rgba(240, 65, 103, 0.2);
+    }
+    .timeline-area ul li:nth-child(even):before {
+        content: '';
+        position: absolute;
+        top: 24px;
+        left: -4px;
+        width: 10px;
+        height: 10px;
+        background: rgb(240, 65, 103);
+        border-radius: 50%;
+        box-shadow: 0 0 0 3px rgba(240, 65, 103, 0.2);
+    }
+    .timeline-area ul li h4 {
+        font-weight: 600;
+        color: rgb(240, 65, 103);
+    }
+    /*.timeline-area ul li p{
+        margin: 10px 0 0;
+        padding: 0;
+    }*/
+    .timeline-area ul li .timeline-time h5 {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .timeline-area ul li:nth-child(odd) .timeline-time {
+        position: absolute;
+        top: 12px;
+        right: -165px;
+        margin: 0;
+        padding: 8px 16px;
+        background: rgb(240, 65, 103);
+        color: #fff;
+        border-radius: 18px;
+        box-shadow: 0 0 0 3px rgba(240, 65, 103, 0.3);
+    }
+    .timeline-area ul li:nth-child(even) .timeline-time {
+        position: absolute;
+        top: 12px;
+        left: -165px;
+        margin: 0;
+        padding: 8px 16px;
+        background: rgb(240, 65, 103);
+        color: #fff;
+        border-radius: 18px;
+        box-shadow: 0 0 0 3px rgba(240, 65, 103, 0.3);
+    }
+   @media (max-width: 1000px){
+       .timeline-area{
+           padding: 40px 0;
+           padding-bottom: 0;
+           width:100%
+       }
+       .timeline-area:before{
+           left: 20px;
+           height: calc(100% - 40px);
+       }
+       .timeline-area ul li .timeline-content{
+           margin-top: 10px;
+       }
+    .timeline-area ul li:nth-child(odd),
+    .timeline-area ul li:nth-child(even){
+        width: 100%;
+        text-align: left;
+        padding-left:50px;
+        padding-bottom:50px;
+    }
+    .timeline-area ul li:nth-child(odd):before,
+    .timeline-area ul li:nth-child(even):before
+    {
+        top: -18px;
+        left: 16px;
+    }
+    .timeline-area ul li:nth-child(odd) .timeline-time,
+    .timeline-area ul li:nth-child(even) .timeline-time
+    {
+        top:-30px;
+        left:50px;
+        right: inherit;
+    }
+   }
+.scroll-500 {
+    max-height: 500px;
+    position: relative;
+    /*top: 0;
+    bottom: 300px;
+    padding: 20px;*/
+}
+.scroll-700{
+    max-height:700px;
+    position:relative;
+}
+.scroll-500 .dx-scrollable-container {
+    max-height: 500px;
+}
+.scroll-700 .dx-scrollable-container {
+    max-height: 700px;
+}  

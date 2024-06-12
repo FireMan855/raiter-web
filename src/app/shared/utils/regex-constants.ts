@@ -1,0 +1,1 @@
+export const contraseniaRegex = /(?=.*[a-zA-Z])(?=.*\d)(?=.*[#$^+=!*()@("a")%&])/

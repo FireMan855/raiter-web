@@ -1,0 +1,44 @@
+<h3 class="mr-auto text-center">Bienvenido/a</h3>
+<p class="mb-5 mr-auto text-center">Ingrese su correo electrónico y contraseña:</p>
+
+<div class="mb-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-at"></i>
+            </span>
+        </div>
+        <dx-text-box #txtEmail class="form-control" placeholder="E-mail" [maxLength]="255" [(value)]="model.Email!" (onEnterKey)="onTxtEmailEnterKey()">
+            <dx-validator [validationGroup]="vgIniciarSesion">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+                <dxi-validation-rule type="email"></dxi-validation-rule>
+            </dx-validator>
+        </dx-text-box>
+    </div>
+</div>
+<div class="mb-3">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-lock"></i>
+            </span>
+        </div>
+        <dx-text-box #txtContrasenia class="form-control" placeholder="Contraseña" [maxLength]="100" [(value)]="model.Contrasenia!" (onEnterKey)="onTxtContraseniaEnterKey()"
+        [mode]="txtContraseniaMode">
+            <dxi-button name="btnVerContrasenia">
+                <dxo-options icon="fas fa-eye" [onClick]="cambiarModoContrasenia"></dxo-options>
+            </dxi-button>
+            <dx-validator [validationGroup]="vgIniciarSesion">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+            </dx-validator>
+        </dx-text-box>
+    </div>
+</div>
+<div class="row mb-3">
+    <div class="col text-center">
+        <a class="text-muted" routerLink="/Usuario/RecuperarContrasenia">¿Ha olvidado su contraseña?</a>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <dx-button #btnIniciarSesion text="Iniciar sesión" type="default" icon="fas fa-check" (onClick)="iniciarSesion()"></dx-button>
+</div>

@@ -1,0 +1,49 @@
+<dx-load-panel [visible]="loadPanelState.visible" [message]="loadPanelState.mensaje" [hideOnOutsideClick]="false"
+[shading]="true" [showPane]="true" [showIndicator]="true" shadingColor="rgba(0,0,0,0.4)"
+></dx-load-panel>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper auth p-0 theme-two">
+            <div class="row d-flex align-items-stretch">
+                <div class="col-md-4 banner-section d-none d-md-flex align-items-stretch justify-content-center">
+                    <div class="slide-content bg-1"> </div>
+                </div>
+                <div class="col-12 col-md-8 h-100 bg-white">
+                    <div class="auto-form-wrapper d-flex align-items-center justify-content-center flex-column">
+                        <div class="nav-get-started">
+                            <p>¿No tiene una cuenta?</p>
+                            <a class="btn get-started-btn" routerLink="Usuario/RegistrarUsuario">REGISTRARSE</a>
+
+                        </div>
+                        <div id="formulario" class="login-container">
+                            <div class="mb-5">
+                                <img src="assets/imagenes/RaiterLogin.png" alt="150" class="img-fluid mx-auto d-block">
+                            </div>
+                            <router-outlet></router-outlet>
+                        </div>
+                        <div class="wrapper text-gray text-center mt-3">
+                            <p class="footer-text">Copyright © {{copyrightYear}} Raiter. Todos los derechos reservados.</p>
+                            <ul class="auth-footer text-gray terminoscondiciones">
+
+                                <li>
+
+                                    <a target="_blank" href="assets/Archivos/TERMINOS_Y_CONDICIONES_RAITER.pdf">Términos y
+                                        Condiciones</a>
+                                </li>
+
+                                <li>
+                                    <a target="_blank" href="assets/Archivos/POLITICA_DE_USO_RAITER.pdf">Politicas de uso</a>
+                                </li>
+                                <li>
+                                    <a target="_blank" href="assets/Archivos/AVISO_DE_PRIVACIDAD_RAITER.pdf">Aviso de
+                                        privacidad</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

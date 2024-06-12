@@ -1,0 +1,56 @@
+<div class="row mb-3">
+    <div class="col-12">
+        <h4><i class="fas fa-key"></i> Reestablecimiento de contraseña</h4>
+    </div>
+</div>
+<div id="formularioRestablecer" *ngIf="!restablecimientoExitoso else postRestablecimiento">
+    <div class="row">
+        <div class="col-12 form-group">
+            <label><i class="fas fa-ellipsis-h"></i> Ingrese su nueva contraseña: <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+            <dx-text-box [maxLength]="255" [mode]="txtContraseniaMode" [(value)]="model.NuevaContrasenia!">
+                <dxi-button name="btnVerContrasenia">
+                    <dxo-options icon="fas fa-eye" [onClick]="cambiarModoContrasenia"></dxo-options>
+                    </dxi-button>
+                <dx-validator [validationGroup]="vgRestablecerContrasenia">
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                    <dxi-validation-rule type="stringLength" [min]="8" [max]="50" message="La contraseña debe contener entre 8 y 50 caracteres"></dxi-validation-rule>
+                    <dxi-validation-rule type="pattern" [pattern]="contraseniaRegexp" message="La contraseña no es válida. Debe contener 8 caracteres como mínimo, un digito, una mayúsucula y una minúscula"></dxi-validation-rule>
+                </dx-validator>
+            </dx-text-box>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 form-group">
+            <label><i class="fas fa-ellipsis-h"></i> Repita su nueva contraseña: <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+            <div id="txtRepetirContrasenia"></div>
+            <dx-text-box [maxLength]="255" [mode]="txtRepetirContraseniaMode" [(value)]="model.RepetirContrasenia!">
+                <dxi-button name="btnVerRepetirContrasenia">
+                    <dxo-options icon="fas fa-eye" [onClick]="cambiarModoRepetirContrasenia"></dxo-options>
+                    </dxi-button>
+                <dx-validator [validationGroup]="vgRestablecerContrasenia">
+                    <dxi-validation-rule type="required"></dxi-validation-rule>
+                    <dxi-validation-rule type="stringLength" [min]="8" [max]="50" message="La contraseña debe contener entre 8 y 50 caracteres"></dxi-validation-rule>
+                    <dxi-validation-rule type="pattern" [pattern]="contraseniaRegexp" message="La contraseña no es válida. Debe contener 8 caracteres como mínimo, un digito, una mayúsucula y una minúscula"></dxi-validation-rule>
+                    <dxi-validation-rule type="compare" [comparisonTarget]="compararContrasenia" message="Las contraseñas no coinciden"></dxi-validation-rule>
+                </dx-validator>
+            </dx-text-box>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col text-right">
+            <dx-button text="Confirmar" type="default" icon="fas fa-check" (onClick)="restablecerContrasenia()"></dx-button>
+        </div>
+    </div>
+</div>
+<ng-template #postRestablecimiento>
+    <div id="confirmacionRestablecer">
+        <div class="alert alert-success" role="alert">
+            <i class="fas fa-check-circle"></i> ¡Se ha reestablecido la contraseña correctamente!
+        </div>
+        <div class="row mt-3">
+            <div class="col text-right">
+                <dx-button text="Iniciar sesión" type="default" icon="fas fa-sign-in" (onClick)="iniciarSesion()"></dx-button>
+            </div>
+        </div>
+     </div>
+</ng-template>

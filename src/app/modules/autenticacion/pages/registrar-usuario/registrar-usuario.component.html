@@ -1,0 +1,161 @@
+<div id="login-form">
+    <ng-container *ngIf="!registroExitoso else postRegistro">
+        <h3 class="mr-auto text-center">Bienvenido/a</h3>
+        <p class="mb-5 mr-auto text-center">Ingrese sus datos de registro:</p>
+        <div class="row">
+            <div class="col-12 form-group">
+                <label for="txtNombre"><i class="fas fa-user fa-fw"></i>Nombre(s): <app-tooltip-campo [ngbPopover]="popNombre">                    
+                </app-tooltip-campo> <app-asterisco-rojo></app-asterisco-rojo></label>
+                <!--<div class="input-group">-->
+                    <dx-text-box [maxLength]="255" [(value)]="model.Nombre!">
+                        <dx-validator [validationGroup]="vgRegistrarUsuario">
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dx-validator>
+                    </dx-text-box>
+                <!--<span class="input-group-text"  [ngbPopover]="popNombre"
+                 triggers="mouseenter:mouseleave"><i class="fas fa-question fa-lg"></i></span>-->
+                <!--</div>-->
+                <ng-template #popNombre>Nombre del usuario a registrar.<br><b class="text-danger">Obligatorio</b></ng-template>  
+            </div>
+            <div class="col-lg-6 col-12 form-group">
+                <label for="txtPaterno"><i class="fas fa-user fa-fw"></i>Apellido paterno: <app-tooltip-campo [ngbPopover]="popApellidoPaterno">                    
+                </app-tooltip-campo> <app-asterisco-rojo></app-asterisco-rojo></label>
+                <dx-text-box [maxLength]="255" [(value)]="model.Paterno!">
+                    <dx-validator [validationGroup]="vgRegistrarUsuario">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
+                <ng-template #popApellidoPaterno>Apellido paterno del usuario a registrar.<br><b class="text-danger">Obligatorio</b>.</ng-template>  
+            </div>
+            <div class="col-lg-6 col-12 form-group">
+                <label for="txtMaterno"><i class="fas fa-user fa-fw"></i>Apellido materno: <app-tooltip-campo [ngbPopover]="popApellidoMaterno">                    
+                </app-tooltip-campo> </label>
+                <dx-text-box [maxLength]="255" [showClearButton]="true" [(value)]="model.Materno!">                
+                </dx-text-box>
+                <ng-template #popApellidoMaterno> Apellido materno del usuario a registrar.</ng-template>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-12 form-group">
+                <label for="txtEmail"><i class="fas fa-at fa-fw"></i>Correo electrónico: <app-tooltip-campo [ngbPopover]="popEmail">                    
+                </app-tooltip-campo> <app-asterisco-rojo></app-asterisco-rojo></label>
+                <dx-text-box [maxLength]="255" [(value)]="model.Email!">
+                    <dx-validator [validationGroup]="vgRegistrarUsuario">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                        <dxi-validation-rule type="email"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
+                <ng-template #popEmail>Correo eletrónico del usuario a registrar.<br>Este sera utilizado para inciar sesión en la aplicación, y para el envío de notificaciones.<br><b class="text-danger">Obligatorio</b>.</ng-template>  
+            </div>
+            <div class="col-lg-6 col-12 form-group">
+                <label for="txtTelefono"><i class="fas fa-phone-alt fa-fw"></i>Teléfono: <app-tooltip-campo [ngbPopover]="popTelefono">                    
+                </app-tooltip-campo></label>
+                <dx-text-box mode="tel" [showClearButton]="true" [(value)]="model.NumeroTelefono!"></dx-text-box>
+                <ng-template #popTelefono>Teléfono fijo o móvil del usuario a registrar.</ng-template>
+            </div>
+    
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-12 form-group">
+                <label for="txtContrasenia"><i class="fas fa-key fa-fw"></i>Contraseña: <app-tooltip-campo [ngbPopover]="popContrasenia">                    
+                </app-tooltip-campo> <app-asterisco-rojo></app-asterisco-rojo></label>
+                <dx-text-box [maxLength]="50" [mode]="txtContraseniaMode" [(value)]="model.Contrasenia!">
+                    <dxi-button name="btnVerContrasenia">
+                    <dxo-options icon="fas fa-eye" [onClick]="cambiarModoContrasenia"></dxo-options>
+                    </dxi-button>
+                    <dx-validator [validationGroup]="vgRegistrarUsuario">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                        <dxi-validation-rule type="stringLength" min="8" max="50" message="La contraseña debe tener de 8 a 50 caracteres"></dxi-validation-rule>
+                        <dxi-validation-rule type="pattern" [pattern]="contraseniaRegexp" message="La contraseña no es válida. Debe contener 8 caracteres como mínimo, un digito, una mayúsucula y una minúscula"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
+                <ng-template #popContrasenia>La contraseña debe contener: <ul> 
+                    <li>Al menos 8 caracteres</li> 
+                    <li>Un carácter alfanúmerico</li> 
+                    <li>Un número</li> 
+                    </ul><b class="text-danger">Obligatorio</b>.</ng-template>
+            </div>
+            <div class="col-lg-6 col-12 form-group">
+                <label for="txtRepetirContrasenia"><i class="fas fa-key fa-fw"></i>Confirmar contraseña: <app-tooltip-campo [ngbPopover]="popRepetirContrasenia">                    
+                </app-tooltip-campo> <app-asterisco-rojo></app-asterisco-rojo></label>
+                <dx-text-box [maxLength]="50" [mode]="txtRepetirContraseniaMode" [(value)]="model.RepetirContrasenia!">
+                    <dxi-button name="btnVerRepetirContrasenia">
+                        <dxo-options icon="fas fa-eye" [onClick]="cambiarModoRepetirContrasenia"></dxo-options>
+                        </dxi-button>
+                    <dx-validator [validationGroup]="vgRegistrarUsuario">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                        <dxi-validation-rule type="stringLength" min="8" max="50" message="La contraseña debe tener de 8 a 50 caracteres"></dxi-validation-rule>
+                        <dxi-validation-rule type="pattern" [pattern]="contraseniaRegexp" message="La contraseña no es válida. Debe contener 8 caracteres como mínimo, un digito, una mayúsucula y una minúscula"></dxi-validation-rule>
+                        <dxi-validation-rule type="compare" [comparisonTarget]="compararContrasenia" message="Las contraseñas no coinciden"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
+                <ng-template #popRepetirContrasenia>
+                    La contraseña debe coincidir con lo escrito en el campo contraseña.<br><b class="text-danger">Obligatorio</b>.
+                </ng-template>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 form-group mx-auto inline-checkbox">
+                <dx-check-box>
+                    <dx-validator [validationGroup]="vgCheckBoxes">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-check-box>
+                <div class="ml-2">Acepto los <a href="/Archivos/TERMINOS_Y_CONDICIONES_RAITER.pdf" target="_blank">términos y condiciones</a> de Raiter</div>
+            </div>
+            <div class="col-md-4 form-group mx-auto inline-checkbox">
+                <dx-check-box>
+                    <dx-validator [validationGroup]="vgCheckBoxes">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-check-box>
+                <div class="ml-2">Acepto las <a href="/Archivos/POLITICA_DE_USO_RAITER.pdf" target="_blank">políticas de uso</a> de Raiter</div>
+            </div>
+            <div class="col-md-4 form-group mx-auto inline-checkbox">
+                <dx-check-box>
+                    <dx-validator [validationGroup]="vgCheckBoxes">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-check-box>
+                <div class="ml-2">Acepto el <a href="/Archivos/AVISO_DE_PRIVACIDAD_RAITER.pdf" target="_blank">aviso de privacidad</a> Raiter</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                <dx-button text="Salir" icon="fas fa-arrow-left" class="mr-sm-2 mb-2 mb-sm-0 d-block d-sm-inline-block" (onClick)="volverALogin()"></dx-button>
+                <dx-button text="Guardar" type="default" icon="fas fa-check" class="d-block d-sm-inline-block" (onClick)="registrarUsuario()"></dx-button>
+    
+                <!--<div id="btnSalir" class="mr-sm-2 mb-2 mb-sm-0 d-block d-sm-inline-block"></div>
+                <div id="btnGuardar" class="d-block d-sm-inline-block"></div>-->
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #postRegistro>
+        <div id="login-confirm">
+            <h4 class="mb-4 text-center"> Registro de usuario exitoso</h4>
+            <div class="alert alert-success" role="alert">
+                <i class="fas fa-check-circle"></i> Se registró correctamente la cuenta. Se ha enviado un mensaje de bienvenida al correo electrónico 
+                <b>{{model.Email}}</b> con un enlace para confirmar la cuenta. Esta confirmación debe ser realizada
+                para poder autenticarse satisfactoriamente y acceder a la plataforma Raiter.
+                Pulse el botón "Reenviar enlace" para enviar de nuevo el enlace en caso de no haberlo recibido en el momento de registrarse.
+                <div id="divCronometro" *ngIf="cronometro" class="mt-3">
+                    Podrá reenviar el enlace en caso de no recibirlo nuevamente en <b>[<span id="tiempoCronometro">{{cronometro}}</span>]</b>
+                </div>
+            </div>
+        </div>
+        <!--<ng-template #postReenvio>
+            <div id="resend-confirm">
+                <div class="alert alert-success" role="alert">
+                    <i class="fas fa-check-circle"></i> Se reenvió correctamente el enlace de confirmación al correo <b>{{model.Email}}</b>
+                </div>
+            </div>
+        </ng-template>-->
+        <div class="row mt-3" id="accionesPostEnvio">
+            <div class="col text-right">
+                <dx-button text="Reenviar enlace" type="normal" icon="fas fa-envelope" (onClick)="reenviarEnlace()"
+                *ngIf="!cronometro"></dx-button>
+                <dx-button text="Iniciar sesión" type="default" icon="fas fa-sign-in" (onClick)="iniciarSesion()"></dx-button>
+            </div>
+        </div>
+    </ng-template>
+</div>
