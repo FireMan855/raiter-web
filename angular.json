@@ -35,9 +35,26 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/devextreme/dist/css/dx.common.css",
+              "node_modules/devextreme/dist/css/dx.light.css",
+              "src/assets/lib/devextreme/devextreme-toolbar-custom.css",
+              "src/assets/lib/devextreme/dx.generic.Theme-Raiter-01.css",
+              "src/assets/css/site.css",
+
+              "src/assets/lib/startadmin/vendor.bundle.base.css",
+              "src/assets/lib/startadmin/css/shared/style.css",
+              "src/assets/lib/startadmin/css/demo_1/style.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/lib/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "src/assets/lib/startadmin/js/shared/off-canvas.js",
+              "src/assets/lib/startadmin/js/shared/hoverable-collapse.js",
+              "src/assets/lib/startadmin/js/shared/misc.js"
+            ]
           },
           "configurations": {
             "production": {

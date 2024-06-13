@@ -17415,7 +17415,7 @@ export class UsuarioClient {
      * @param request Incluye el e-mail y la contraseña del usuario que intenta autenticarse y obtener un token
      * @return Token JWT
      */
-    obtenerToken(request: InicioSesionPeticion, area: string): Observable<string> {
+    obtenerToken(request: InicioSesionPeticion, area: string): Observable<GenerarTokenJWTRespuesta> {
         let url_ = this.baseUrl + "/{area}/Usuario/ObtenerToken";
         if (area === undefined || area === null)
             throw new Error("The parameter 'area' must be defined.");
@@ -17441,14 +17441,14 @@ export class UsuarioClient {
                 try {
                     return this.processObtenerToken(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<string>;
+                    return _observableThrow(e) as any as Observable<GenerarTokenJWTRespuesta>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<string>;
+                return _observableThrow(response_) as any as Observable<GenerarTokenJWTRespuesta>;
         }));
     }
 
-    protected processObtenerToken(response: HttpResponseBase): Observable<string> {
+    protected processObtenerToken(response: HttpResponseBase): Observable<GenerarTokenJWTRespuesta> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -17458,7 +17458,7 @@ export class UsuarioClient {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
-            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as GenerarTokenJWTRespuesta;
             return _observableOf(result200);
             }));
         } else if (status === 400) {
@@ -22602,6 +22602,18 @@ export interface RegistroUsuarioWebPeticion {
 export interface InicioSesionPeticion {
     Email?: string | undefined;
     Contrasenia?: string | undefined;
+}
+
+export interface GenerarTokenJWTRespuesta {
+    Token?: string | undefined;
+    FechaExpiracion: string;
+    Id?: string | undefined;
+    Rol?: string | undefined;
+    TransportistaId?: string | undefined;
+    EstadoVerificacionTransportista?: EstadoAprobacionTransportista | undefined;
+    EstadoVerificacionTransportistaString?: string | undefined;
+    NombreUsuario?: string | undefined;
+    NombreCompleto?: string | undefined;
 }
 
 export interface EditarUsuarioPeticion extends RegistroUsuarioPeticion {

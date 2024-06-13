@@ -4,6 +4,8 @@ import { LoadPanelGeneralState, RaiterState } from '../../store/load-panel/Raite
 import { Store } from '@ngrx/store';
 import { loadPanelGeneralSelector } from '../../store/load-panel/load-panel.selectors';
 import { Subject, takeUntil } from 'rxjs';
+import { UsuarioRaiterState } from '../../store/usuario-raiter/UsuarioRaiterState.interface';
+import { usuarioRaiterSelector } from '../../store/usuario-raiter/usuario-raiter.selectors';
 
 @Component({
   selector: 'app-login-layout',

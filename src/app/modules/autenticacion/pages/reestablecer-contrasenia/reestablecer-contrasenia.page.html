@@ -6,7 +6,8 @@
 <div id="formularioRestablecer" *ngIf="!restablecimientoExitoso else postRestablecimiento">
     <div class="row">
         <div class="col-12 form-group">
-            <label><i class="fas fa-ellipsis-h"></i> Ingrese su nueva contraseña: <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+            <label><i class="fas fa-ellipsis-h"></i> Ingrese su nueva contraseña: 
+                <app-tooltip-campo [ngbPopover]="popContrasenia"></app-tooltip-campo><app-asterisco-rojo></app-asterisco-rojo></label>
             <dx-text-box [maxLength]="255" [mode]="txtContraseniaMode" [(value)]="model.NuevaContrasenia!">
                 <dxi-button name="btnVerContrasenia">
                     <dxo-options icon="fas fa-eye" [onClick]="cambiarModoContrasenia"></dxo-options>
@@ -17,11 +18,18 @@
                     <dxi-validation-rule type="pattern" [pattern]="contraseniaRegexp" message="La contraseña no es válida. Debe contener 8 caracteres como mínimo, un digito, una mayúsucula y una minúscula"></dxi-validation-rule>
                 </dx-validator>
             </dx-text-box>
+            <ng-template #popContrasenia>La contraseña debe contener: <ul> 
+                <li>Al menos 8 caracteres</li> 
+                <li>Un carácter alfanúmerico</li> 
+                <li>Un número</li> 
+                </ul><b class="text-danger">Obligatorio</b>.
+            </ng-template>
         </div>
     </div>
     <div class="row">
         <div class="col-12 form-group">
-            <label><i class="fas fa-ellipsis-h"></i> Repita su nueva contraseña: <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+            <label><i class="fas fa-ellipsis-h"></i> Repita su nueva contraseña: <app-tooltip-campo [ngbPopover]="popRepetirContrasenia">                
+            </app-tooltip-campo> <app-asterisco-rojo></app-asterisco-rojo></label>
             <div id="txtRepetirContrasenia"></div>
             <dx-text-box [maxLength]="255" [mode]="txtRepetirContraseniaMode" [(value)]="model.RepetirContrasenia!">
                 <dxi-button name="btnVerRepetirContrasenia">
@@ -34,6 +42,9 @@
                     <dxi-validation-rule type="compare" [comparisonTarget]="compararContrasenia" message="Las contraseñas no coinciden"></dxi-validation-rule>
                 </dx-validator>
             </dx-text-box>
+            <ng-template #popRepetirContrasenia>
+                La contraseña debe coincidir con lo escrito en el campo de nueva contraseña.<br><br><b class="text-danger">Obligatorio</b>.
+            </ng-template>
         </div>
     </div>
     <div class="row mt-3">

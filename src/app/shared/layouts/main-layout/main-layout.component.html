@@ -101,7 +101,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link count-indicator" id="notificaciones" href="#" data-toggle="dropdown">
                         <i class="fas fa-bell"></i>
-                        <span class="count bg-danger" id="spanCountNotificaciones">0</span>
+                        <span class="count bg-danger" id="spanCountNotificaciones">{{ numNotificacionesNoLeidas }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificaciones" id="divNotificaciones">
                         <div id="divScrollNotificaciones">
@@ -141,7 +141,7 @@
                     </div>
                 </li>
             <!--}-->
-            <app-logged-user></app-logged-user>
+            <app-logged-user [nombreUsuario]="usuarioRaiter?.NombreUsuario"></app-logged-user>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-xl-none align-self-center" type="button" data-toggle="offcanvas" (click)="abrirCerrarMenuDerecho()">
             <!--<span class="mdi mdi-menu"></span>-->
@@ -151,7 +151,7 @@
 </nav>
 <!-- partial -->
 <div class="container-fluid page-body-wrapper">
-    <app-main-menu></app-main-menu>
+    <app-main-menu [nombreUsuario]="usuarioRaiter?.NombreUsuario"></app-main-menu>
     <div class="main-panel">
         <div class="content-wrapper">
             <router-outlet></router-outlet>

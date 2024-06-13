@@ -1,0 +1,6 @@
+::ng-deep .dropdown-item{
+    cursor: pointer;
+}
+::ng-deep .dropdown-item:hover{
+    background-color: darkgray !important;
+}

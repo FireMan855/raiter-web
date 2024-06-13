@@ -1,25 +1,31 @@
 <nav class="sidebar sidebar-offcanvas" [ngClass]="{'active': menuDerechoAbierto}" id="sidebar">
     <ul class="nav">
         <li class="nav-item nav-profile">
-            <a asp-controller="Usuario" asp-action="MiCuenta" title='@nombreUsuario' class="nav-link">
+            <a asp-controller="Usuario" asp-action="MiCuenta" [title]='nombreUsuario ?? "Invitado"' class="nav-link">
                 <div class="profile-image">
                     <img class="img-xs rounded-circle" src="assets/imagenes/user_black.png" alt="profile image">
                     <div class="dot-indicator bg-success"></div>
                 </div>
                 <div class="text-wrapper">
-                    <p class="profile-name">Invitado</p>
+                    <p class="profile-name">{{ nombreUsuario ?? 'Invitado' }}</p>
                     <p class="designation"></p>
                 </div>
             </a>
         </li>
-       <!-- @if ((User.Identity.IsAuthenticated && User.IsInRole(NombresEstaticosRoles.Usuario) && string.IsNullOrWhiteSpace(User.GetTransportistaId())) 
+        <!-- @if ((User.Identity.IsAuthenticated && User.IsInRole(NombresEstaticosRoles.Usuario) && string.IsNullOrWhiteSpace(User.GetTransportistaId())) 
             || (!string.IsNullOrWhiteSpace(User.GetTransportistaId()) && User.GetEstadoAprobacionTransportista() != RaiterClaimsConstantesUtil.TransportistaAprobado))
         {-->
-            <li>
-                <div class="text-center btnTransportistaContainer">
-                    <a asp-controller="Transportista" asp-action="ActivarTransportista" role="button" class="btn btn-primary btnSerTransportista"><i class="fas fa-truck-moving"></i> <span>¡Quiero ser transportista!</span></a>
-                </div>
-            </li>
+        <li *ngIf="usuarioRaiter && (usuarioRaiter.Rol === usuarioRolRef) && (!usuarioRaiter.TransportistaId
+                || (usuarioRaiter.TransportistaId && (usuarioRaiter.EstadoVerificacionTransportista !== undefined)
+                    && (usuarioRaiter.EstadoVerificacionTransportista !== transportistaAprobadoRef)
+                )
+            )">
+            <div class="text-center btnTransportistaContainer">
+                <a asp-controller="Transportista" asp-action="ActivarTransportista" role="button"
+                    class="btn btn-primary btnSerTransportista"><i class="fas fa-truck-moving"></i> <span>¡Quiero ser
+                        transportista!</span></a>
+            </div>
+        </li>
         <!--}-->
         <li class="nav-item nav-category">Menu</li>
         <li class="nav-item">
@@ -30,8 +36,10 @@
         </li>
         <!--@if (User.Identity.IsAuthenticated && User.IsInRole(NombresEstaticosRoles.Administrador))
         {-->
+        <ng-container *ngIf="usuarioRaiter && usuarioRaiter.Rol === administradorRolRef">
             <li class="nav-item">
-                <a class='nav-link' data-toggle="collapse" href="#usuarios" aria-expanded="false" aria-controls="usuarios">
+                <a class='nav-link' data-toggle="collapse" href="#usuarios" aria-expanded="false"
+                    aria-controls="usuarios">
                     <i class="menu-icon fas fa-users"></i>
                     <span class="menu-title">Usuarios</span>
                     <i class="menu-arrow"></i>
@@ -48,7 +56,8 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#configuracion" aria-expanded="false" aria-controls="choferes">
+                <a class="nav-link" data-toggle="collapse" href="#configuracion" aria-expanded="false"
+                    aria-controls="choferes">
                     <i class="menu-icon fas fa-cogs"></i>
                     <span class="menu-title">Configuración</span>
                     <i class="menu-arrow"></i>
@@ -58,20 +67,22 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="Catalogos">Catálogos</a>
                         </li>
-                       <!-- @if (!codemx.raiter.aplicacion.Utils.RaiterSingleton.RaiterAppsettings.EsProduccion)
+                        <!-- @if (!codemx.raiter.aplicacion.Utils.RaiterSingleton.RaiterAppsettings.EsProduccion)
                         {-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="/swagger/index.html?url=/swagger/v1/swagger.json">Doc. API Swagger</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/redoc/index.html?url=/swagger/v1/swagger.json">Doc. API ReDoc</a>
-                            </li>
-                       <!-- }-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/swagger/index.html?url=/swagger/v1/swagger.json">Doc. API
+                                Swagger</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/redoc/index.html?url=/swagger/v1/swagger.json">Doc. API ReDoc</a>
+                        </li>
+                        <!-- }-->
                     </ul>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#trasportistasAdmin" aria-expanded="false" aria-controls="trasportistasAdmin">
+                <a class="nav-link" data-toggle="collapse" href="#trasportistasAdmin" aria-expanded="false"
+                    aria-controls="trasportistasAdmin">
                     <i class="menu-icon fas fa-user-tie"></i>
                     <span class="menu-title">Transportistas</span>
                     <i class="menu-arrow"></i>
@@ -88,7 +99,8 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#viajesAdmin" aria-expanded="false" aria-controls="viajesAdmin">
+                <a class="nav-link" data-toggle="collapse" href="#viajesAdmin" aria-expanded="false"
+                    aria-controls="viajesAdmin">
                     <i class="menu-icon fas fa-road"></i>
                     <span class="menu-title">Viajes</span>
                     <i class="menu-arrow"></i>
@@ -102,7 +114,8 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#pagosAdmin" aria-expanded="false" aria-controls="pagosAdmin">
+                <a class="nav-link" data-toggle="collapse" href="#pagosAdmin" aria-expanded="false"
+                    aria-controls="pagosAdmin">
                     <i class="menu-icon fas fa-money-bill-wave"></i>
                     <span class="menu-title">Pagos</span>
                     <i class="menu-arrow"></i>
@@ -110,22 +123,25 @@
                 <div class="collapse" id="pagosAdmin">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Pago" asp-action="PagosRecibidosAdmin">Pagos recibidos</a>
+                            <a class="nav-link" asp-controller="Pago" asp-action="PagosRecibidosAdmin">Pagos
+                                recibidos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Pago" asp-action="PagosRealizadosAdmin">Pagos realizados</a>
+                            <a class="nav-link" asp-controller="Pago" asp-action="PagosRealizadosAdmin">Pagos
+                                realizados</a>
                         </li>
                         <!--@if (User.Identity.IsAuthenticated && User.IsInRole(NombresEstaticosRoles.Administrador))
                         {-->
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Pago" asp-action="Ingresos">Ingresos</a>
-                            </li>
+                        <li *ngIf="usuarioRaiter && usuarioRaiter.Rol === administradorRolRef" class="nav-item">
+                            <a class="nav-link" asp-controller="Pago" asp-action="Ingresos">Ingresos</a>
+                        </li>
                         <!--}-->
                     </ul>
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#facturacionAdmin" aria-expanded="false" aria-controls="facturacionAdmin">
+                <a class="nav-link" data-toggle="collapse" href="#facturacionAdmin" aria-expanded="false"
+                    aria-controls="facturacionAdmin">
                     <i class="menu-icon fas fa-file-code"></i>
                     <span class="menu-title">Facturación</span>
                     <i class="menu-arrow"></i>
@@ -133,14 +149,18 @@
                 <div class="collapse" id="facturacionAdmin">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Facturacion" asp-action="IndexFacturacionAdmin">Administración</a>
+                            <a class="nav-link" asp-controller="Facturacion"
+                                asp-action="IndexFacturacionAdmin">Administración</a>
                         </li>
                     </ul>
                 </div>
             </li>
+        </ng-container>
+
         <!--}
         @if (User.Identity.IsAuthenticated && User.IsInRole(NombresEstaticosRoles.Usuario))
         {-->
+        <ng-container *ngIf="usuarioRaiter && usuarioRaiter.Rol === usuarioRolRef">
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#viajes" aria-expanded="false" aria-controls="viajes">
                     <i class="menu-icon fas fa-road"></i>
@@ -153,10 +173,12 @@
                             <a class="nav-link" asp-controller="Viaje" asp-action="MisViajes">Mis viajes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="SolicitudViaje" asp-action="BuscarViaje">Buscar viaje</a>
+                            <a class="nav-link" asp-controller="SolicitudViaje" asp-action="BuscarViaje">Buscar
+                                viaje</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="PostulacionViaje" asp-action="MisPostulaciones">Mis postulaciones</a>
+                            <a class="nav-link" asp-controller="PostulacionViaje" asp-action="MisPostulaciones">Mis
+                                postulaciones</a>
                         </li>
                     </ul>
                 </div>
@@ -170,7 +192,8 @@
                 <div class="collapse" id="pagos">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Pago" asp-action="MisPagosRealizados">Pagos realizados</a>
+                            <a class="nav-link" asp-controller="Pago" asp-action="MisPagosRealizados">Pagos
+                                realizados</a>
                         </li>
                         <!--<li class="nav-item">
                             <a class="nav-link" asp-controller="Pago" asp-action="Index">Tarjeta</a>
@@ -183,30 +206,36 @@
             </li>
             <!--if (!string.IsNullOrWhiteSpace(User?.GetTransportistaId()) && User.GetEstadoAprobacionTransportista().Equals(RaiterClaimsConstantesUtil.TransportistaAprobado))
             {-->
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#trasportista" aria-expanded="false" aria-controls="trasportista">
-                        <i class="menu-icon fas fa-user-tie"></i>
-                        <span class="menu-title">Transportista</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="trasportista">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Transportista" asp-action="EstadoVerificacion">Estado verificación</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="UnidadTransporte" asp-action="Index">Unidades transporte</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Chofer" asp-action="Index">Choferes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Viaje" asp-action="Index">Viajes</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            <!--}
-        }-->
+            <li class="nav-item" *ngIf="usuarioRaiter && usuarioRaiter.TransportistaId 
+            && usuarioRaiter.EstadoVerificacionTransportista === transportistaAprobadoRef">
+                <a class="nav-link" data-toggle="collapse" href="#trasportista" aria-expanded="false"
+                    aria-controls="trasportista">
+                    <i class="menu-icon fas fa-user-tie"></i>
+                    <span class="menu-title">Transportista</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="trasportista">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Transportista" asp-action="EstadoVerificacion">Estado
+                                verificación</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="UnidadTransporte" asp-action="Index">Unidades
+                                transporte</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Chofer" asp-action="Index">Choferes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Viaje" asp-action="Index">Viajes</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <!--}-->
+        </ng-container>
+
+        <!--}-->
     </ul>
 </nav>

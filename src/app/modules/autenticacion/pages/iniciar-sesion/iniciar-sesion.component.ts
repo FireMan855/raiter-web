@@ -6,6 +6,7 @@ import { DxTextBoxComponent, DxValidatorComponent } from 'devextreme-angular';
 import { EnterKeyEvent } from 'devextreme/ui/text_box';
 import { LoadPanelService } from '../../../../shared/services/load-panel.service';
 import { Router } from '@angular/router';
+import { UsuarioStateService } from '../../../../shared/services/usuario-state.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -39,7 +40,7 @@ export class IniciarSesionComponent {
    */
   @ViewChild('btnIniciarSesion') private readonly btnIniciarSesion!: DxTextBoxComponent
   constructor(private readonly usuarioClient: UsuarioClient, private readonly loadPanelService: LoadPanelService,
-    private readonly router : Router
+    private readonly router : Router, private readonly usuarioStateService : UsuarioStateService
   ) { }
   /**
    * Nombre del grupo DevExtreme a validar para iniciar sesión
@@ -55,7 +56,8 @@ export class IniciarSesionComponent {
     }
     this.loadPanelService.mostrarLoadPanel("Iniciando sesión");
     this.usuarioClient.obtenerToken(this.model, ApiArea).subscribe(e => {
-      this.router.navigateByUrl('/Inicio')
+      this.usuarioStateService.agregarUsuario(e);
+      this.router.navigateByUrl('/')
     }).add(() => this.loadPanelService.ocultarLoadPanel());
   }
   /**
