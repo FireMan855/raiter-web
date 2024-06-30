@@ -9,27 +9,27 @@ import { ReestablecerContraseniaPage } from "./pages/reestablecer-contrasenia/re
 
 const routes : Routes = [
     {
-        path: 'Usuario/IniciarSesion',
+        path: 'IniciarSesion',
         component: IniciarSesionComponent,
         title: 'Iniciar sesión'
       },
       {
-        path: 'Usuario/RegistrarUsuario',
+        path: 'RegistrarUsuario',
         component: RegistrarUsuarioComponent,
         title: 'Registro'
       },
       {
-        path: 'Usuario/RecuperarContrasenia',
+        path: 'RecuperarContrasenia',
         component: RecuperarContraseniaPage,
         title: 'Recuperar contraseña'
       },
       {
-        path: 'Usuario/ConfirmarEmail',
+        path: 'ConfirmarEmail',
         component: ConfirmarEmailPage,
         title: 'Confirmar e-mail'
       },
       {
-        path: 'Usuario/RestablecerContrasenia',
+        path: 'RestablecerContrasenia',
         component: ReestablecerContraseniaPage,
         title: 'Restablecer contraseña'
       }

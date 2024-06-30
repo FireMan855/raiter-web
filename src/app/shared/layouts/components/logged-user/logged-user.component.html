@@ -14,9 +14,9 @@
             <!--@if (!SignInManager.IsSignedIn(User))
             {-->
             <ng-container *ngIf="!nombreUsuario">
-                <a class="dropdown-item" asp-controller="Usuario" asp-action="IniciarSesion"><i
+                <a class="dropdown-item" routerLink="/Usuario/IniciarSesion"><i
                         class="dropdown-item-icon mdi mdi-account-outline text-primary"></i>Iniciar Sesión</a>
-                <a class="dropdown-item" asp-controller="Usuario" asp-action="Registrar"><i
+                <a class="dropdown-item" routerLink="/Usuario/RegistrarUsuario"><i
                         class="dropdown-item-icon mdi mdi-account-outline text-primary"></i>Registrarse</a>
             </ng-container>
 

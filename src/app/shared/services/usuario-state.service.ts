@@ -8,20 +8,32 @@ import { AgregarUsuarioAction, EliminarUsuarioAction } from '../store/usuario-ra
   providedIn: 'root'
 })
 export class UsuarioStateService {
-  readonly userKey = 'user';
+  static readonly userKey = 'user';
 
   constructor(private readonly store : Store<RaiterState>) { }
 
   agregarUsuario(usuario : UsuarioRaiterState){
     this.store.dispatch(AgregarUsuarioAction({usuario}));
-    localStorage.setItem(this.userKey, JSON.stringify(usuario));
+    localStorage.setItem(UsuarioStateService.userKey, JSON.stringify(usuario));
   }
   eliminarUsuario(){
     this.store.dispatch(EliminarUsuarioAction());
-    localStorage.removeItem(this.userKey);
+    localStorage.removeItem(UsuarioStateService.userKey);
+  }
+  obtenerUsuarioActualLocalStorage() : UsuarioRaiterState | undefined{
+    let userLocalStorage = localStorage.getItem(UsuarioStateService.userKey);
+    if (userLocalStorage){
+      try{
+      return JSON.parse(userLocalStorage)
+      }
+      catch{
+        return undefined
+      }
+    }
+    return undefined
   }
   static obtenerUsuarioActualLocalStorage() : UsuarioRaiterState | undefined{
-    let userLocalStorage = localStorage.getItem('user');
+    let userLocalStorage = localStorage.getItem(UsuarioStateService.userKey);
     if (userLocalStorage){
       try{
       return JSON.parse(userLocalStorage)
