@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { confirm } from 'devextreme/ui/dialog'
+import { confirm, custom } from 'devextreme/ui/dialog'
 import notify from 'devextreme/ui/notify';
 
 @Injectable({
@@ -20,4 +20,27 @@ export class NotificacionService {
   mostrarWarningToast(mensaje : string, milisegundos : number = 5000){
     notify(mensaje,'error', milisegundos);
   }
+    /**
+   * Método que muestra un cuadro de dialogo para noitificacion para un proceso completado correctamente
+   * @param mensaje Mensaje corto principal
+   * @param detalles Detalles adicionales (opciones)
+   */
+    public success(mensaje: string, detalles?: string): Promise<boolean> {
+      detalles && detalles.trim() !== '' ? detalles = `<br/><p>${detalles}</p>` : detalles = "";
+      return custom({
+        messageHtml: `<h5 class="text-center"><i class="fas fa-circle-check fa-3x text-success"></i><br/>${mensaje}</h5>${detalles}`,
+        showTitle: false,
+      })
+        .show();
+    }
+     /**
+   * Método que muestra un cuadro de dialogo para confirmacion del usuario
+   * @param mensaje Mensaje corto principal
+   * @param detalles Detalles adicionales (opciones)
+   */
+  public confirm(mensaje: string, detalles?: string): Promise<boolean> {
+    detalles && detalles.trim() !== '' ? detalles = `<br/><p>${detalles}</p>` : detalles = "";
+    return confirm(`<h5 class="text-center"><i class="fas fa-circle-question fa-3x text-warning"></i><br/>${mensaje}</h5>${detalles}`, "Confirmación");
+  }
+  
 }

@@ -1,0 +1,41 @@
+    <div class="row">
+        <div class="col-12">
+            <div class="row form-group">
+                <div class=" col-md-6">
+                    <label for="txtNombre"><i class="fas fa-font fa-fw"></i> Nombre: <i
+                            class="fas fa-asterisk fa-fw fa-xs text-danger"></i></label>
+                    <dx-text-box [maxLength]="255" [readOnly]="soloLectura" [(value)]="model.Nombre!">
+                        <dx-validator [validationGroup]="vgFormulario">
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dx-validator>
+                    </dx-text-box>
+                </div>
+                <div class="col-md-6">
+                    <label for="txtAbreviacion"><i class="fas fa-font fa-fw"></i> Abreviación: <i
+                            class="fas fa-asterisk fa-fw fa-xs text-danger"></i></label>
+                    <dx-text-box [maxLength]="255" [readOnly]="soloLectura" [(value)]="model.Abreviacion!">
+                        <dx-validator [validationGroup]="vgFormulario">
+                            <dxi-validation-rule type="required"></dxi-validation-rule>
+                        </dx-validator>
+                    </dx-text-box>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="  form-group col-12">
+                    <label for="txtDescripcion"> Descripción:</label>
+                    <dx-text-box [maxLength]="1000" [readOnly]="soloLectura" [(value)]="model.Descripcion!">
+                        <dx-validator [validationGroup]="vgFormulario">
+                        </dx-validator>
+                    </dx-text-box>
+                </div>
+            </div>
+            <div class="row justify-content-end">
+                <div class="col-md-8 text-right">
+                    <dx-button text="Salir" icon="fas fa-arrow-left" class="mr-sm-2 mb-2 mb-sm-0 d-block d-sm-inline-block" 
+                    (onClick)="onSalirClick()"></dx-button>
+                    <dx-button *ngIf="!soloLectura" text="Guardar" icon="fas fa-save" class=" d-block d-sm-inline-block" 
+                    type="default" (onClick)="onGuardarClick()"></dx-button>
+                </div>
+            </div>
+        </div>
+    </div>

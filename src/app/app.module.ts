@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,10 +11,12 @@ import { TitleStrategy } from '@angular/router';
 import { TituloPaginaService } from './shared/services/titulo-pagina.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from './shared/services/error-interceptor';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { loadPanelReducer } from './shared/store/load-panel/load-panel.reducers';
 import { DxLoadPanelModule } from 'devextreme-angular';
 import { usuarioReducer } from './shared/store/usuario-raiter/usuario-raiter.reducers';
+import { UsuarioStateService } from './shared/services/usuario-state.service';
+import { LoadPanelGeneralComponent } from './shared/components/load-panel-general/load-panel-general.component';
 
 @NgModule({
   declarations: [
@@ -22,19 +24,37 @@ import { usuarioReducer } from './shared/store/usuario-raiter/usuario-raiter.red
     LoginLayoutComponent,
     MainLayoutComponent,
     MainMenuComponent,
-    LoggedUserComponent
+    LoggedUserComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     DxLoadPanelModule,
+    LoadPanelGeneralComponent,
     StoreModule.forRoot({ loadPanelGeneral: loadPanelReducer, usuario: usuarioReducer})
   ],
   providers: [{
     provide: TitleStrategy,
     useClass: TituloPaginaService
-  },{
+  },
+  {
+    provide: APP_INITIALIZER,
+    deps: [UsuarioStateService],
+    useFactory: (service : UsuarioStateService) => {
+      let realOpenXMLHttpRequest = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function(type, url) {
+        let res = realOpenXMLHttpRequest.apply(this, arguments as any);
+        let usuarioAutenticado = service.obtenerUsuarioActualLocalStorage();
+        if(usuarioAutenticado && usuarioAutenticado.Token){
+          this.setRequestHeader('Authorization', 'Bearer ' + usuarioAutenticado.Token);
+        }
+        return res;
+      }
+
+    }
+  },
+  {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorInterceptor,
     multi: true
