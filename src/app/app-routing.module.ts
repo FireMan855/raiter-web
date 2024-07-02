@@ -23,6 +23,13 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/unidades-medida/unidades-medida.module').then(m => m.UnidadesMedidaModule),
     data: { roles : [RolesStrings.Administrador] }, 
     canMatch: [UsuarioGuard]
+  },
+  {
+    path: 'TipoUnidadTransporte',
+    component: MainLayoutComponent,
+    loadChildren: () => import('../app/modules/tipos-unidad-transporte/tipos-unidad-transporte.module').then(m => m.TiposUnidadTransporteModule),
+    data: { roles: [RolesStrings.Administrador] },
+    canMatch: [UsuarioGuard]
   }
   /*{
     path:'',

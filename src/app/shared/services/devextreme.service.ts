@@ -5,13 +5,14 @@ import { Workbook } from 'exceljs';
 import { exportDataGrid } from 'devextreme/excel_exporter';
 import saveAs from 'file-saver';
 import { ExportingEvent } from 'devextreme/ui/data_grid';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DevextremeService {
 
-  readonly baseUrl= `http://localhost:57909/api/`
+  readonly baseUrl= `${environment.baseUrl}`
 
   constructor() { }
 

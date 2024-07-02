@@ -42,5 +42,17 @@ export class NotificacionService {
     detalles && detalles.trim() !== '' ? detalles = `<br/><p>${detalles}</p>` : detalles = "";
     return confirm(`<h5 class="text-center"><i class="fas fa-circle-question fa-3x text-warning"></i><br/>${mensaje}</h5>${detalles}`, "Confirmación");
   }
-  
+   /**
+   * Método que muestra un cuadro de dialogo para noitificacion de advertencia o error
+   * @param mensaje Mensaje corto principal
+   * @param detalles Detalles adicionales (opciones)
+   */
+   public warninig(mensaje: string, detalles?: string) {
+    detalles && detalles.trim() !== '' ? detalles = `<br/><p>${detalles}</p>` : detalles = "";
+    return custom({
+      messageHtml: `<h5 class="text-center"><i class="fas fa-triangle-exclamation fa-3x text-warning"></i><br/>${mensaje}</h5>${detalles}`,
+      showTitle: false,
+    })
+      .show();
+  }
 }

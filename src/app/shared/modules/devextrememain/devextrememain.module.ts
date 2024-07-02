@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DxActionSheetModule, DxButtonModule, DxDataGridModule, DxPopupModule, DxTextBoxModule, DxValidatorModule} from 'devextreme-angular';
+import { DxActionSheetModule, DxButtonModule, DxCheckBoxModule, DxDataGridModule, DxPopupModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidatorModule} from 'devextreme-angular';
 import { DxDataGridDefaultComponent } from './dx-data-grid-default/dx-data-grid-default.component'
 
 
@@ -10,11 +10,14 @@ import { DxDataGridDefaultComponent } from './dx-data-grid-default/dx-data-grid-
   ],
   imports: [
     CommonModule,
-    DxDataGridModule
+    //DxDataGridModule
   ],
   exports:[
     DxButtonModule,
     DxTextBoxModule,
+    DxTextAreaModule,
+    DxSelectBoxModule,
+    DxCheckBoxModule,
     DxValidatorModule,
     DxActionSheetModule,
     DxDataGridModule,

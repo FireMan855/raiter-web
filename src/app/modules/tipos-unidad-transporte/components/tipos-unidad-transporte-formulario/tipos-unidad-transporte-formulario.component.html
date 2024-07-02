@@ -1,0 +1,57 @@
+<div class="row form-group">
+    <div class="col-12 form-group">
+        <label for="txtNombre"><i class="fas fa-font fa-fw"></i> Nombre: <i
+                class="fas fa-asterisk fa-xs text-danger"></i></label>
+        <dx-text-box [maxLength]="255" [(value)]="model.Nombre!">
+            <dx-validator [validationGroup]="vgFormulario">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+            </dx-validator>
+        </dx-text-box>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-12 form-group">
+        <label for="txtDescripcion"><i class="fas fa-font fa-fw"></i> Descripción:</label>
+        <dx-text-area [maxLength]="3000" [(value)]="model.Descripcion!"></dx-text-area>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-12 form-group">
+        <label for="txtTipoUnidad"><i class="fas fa-list fa-fw"></i>Tipo: <i
+                class="fas fa-asterisk fa-xs text-danger"></i></label>
+        <dx-select-box displayExpr="Name" valueExpr="Value" [dataSource]="tiposDataSource" [(value)]="model.Tipo"
+        placeholder="Seleccione un tipo de unidad">
+            <dx-validator [validationGroup]="vgFormulario">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+            </dx-validator>
+        </dx-select-box>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-sm-1 col-md-2 form-group">
+        <dx-check-box text="¿Requiere alto?" [(value)]="model.RequiereAlto"></dx-check-box>
+    </div>
+    <div class="col-sm-1 col-md-2 form-group">
+        <dx-check-box text="¿Requiere ancho?" [(value)]="model.RequiereAncho"></dx-check-box>
+    </div>
+    <div class="col-sm-1 col-md-2 form-group">
+        <dx-check-box text="¿Requiere largo?" [(value)]="model.RequiereLargo"></dx-check-box>
+    </div>
+    <div class="col-sm-1 col-md-2 form-group">
+        <dx-check-box text="¿Requiere peso?" [(value)]="model.RequierePeso"></dx-check-box>
+    </div>
+    <div class="col-sm-1 col-md-2 form-group">
+        <dx-check-box text="¿Requiere temperatura?" [(value)]="model.RequiereTemperatura"></dx-check-box>
+    </div>
+    <div class="col-sm-1 col-md-2 form-group">
+        <dx-check-box text="¿Requiere sustancia peligrosa?" [(value)]="model.RequiereSustanciaPeligrosa"></dx-check-box>
+    </div>
+</div>
+<div class="row justify-content-end">
+    <div class="col-md-8 text-right">
+        <dx-button icon="fas fa-arrow-left" type="normal" text="Salir"
+            class="mr-sm-2 mb-2 mb-sm-0 d-block d-sm-inline-block" (onClick)="onSalirClick()"></dx-button>
+        <dx-button icon="fas fa-save" text="Guardar" type="default" class="d-block d-sm-inline-block"
+            (onClick)="onGuardarClick()"></dx-button>
+    </div>
+</div>

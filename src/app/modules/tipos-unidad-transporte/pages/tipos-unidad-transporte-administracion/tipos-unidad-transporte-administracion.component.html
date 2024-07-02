@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-header">
+    <h4><i class="fas fa-cog"></i> Administración tipos de unidades de transporte</h4>
+  </div>
+  <div class="card-body">
+    <dx-data-grid [remoteOperations]="true" [allowColumnResizing]="true" [columnHidingEnabled]="true"
+      [rowAlternationEnabled]="true" [dataSource]="dataSource"
+      (onContentReady)="dxDataGridOptions.onContentReady($event)" (onExporting)="dxDataGridOptions.onExporting($event)">
+      <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+      <dxo-search-panel [visible]="true" applyFilter="auto"></dxo-search-panel>
+      <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[20, 50, 100]" [showInfo]="true"></dxo-pager>
+      <dxo-selection mode="multiple" [allowSelectAll]="true" selectAllMode="page"
+        showCheckBoxesMode="onClick"></dxo-selection>
+      <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+      <dxo-header-filter [visible]="true"></dxo-header-filter>
+
+      <dxi-column dataField="FechaRegistro" dataType="date" caption="Fecha de registro" format="dd/MM/yyyy HH:mm"
+        sortOrder="desc" [width]="180" [hidingPriority]="1"></dxi-column>
+      <dxi-column dataField="Nombre" dataType="string" [width]="200"></dxi-column>
+      <dxi-column dataField="Descripcion" caption="Descripción" dataType="string" [hidingPriority]="2"></dxi-column>
+      <dxi-column dataField="TipoString" caption="Tipo" dataType="string" [hidingPriority]="3"></dxi-column>
+      <dxi-column caption="OPC" name="opciones" [allowExporting]="false" [allowFiltering]="false"
+        [allowResizing]="false" [allowSorting]="false" [showInColumnChooser]="false" [width]="50" type="buttons">
+        <dxi-button icon="menu" [onClick]="dxDataGridOptions.onOpcClick"></dxi-button>
+      </dxi-column>
+      <!-- { dataField: 'FechaRegistro', caption: 'Fecha de registro', dataType: 'date',format:'dd/MM/yyyy HH:mm',sortOrder:'desc',width:200,hidingPriority:1 },
+ { dataField: 'Nombre', dataType: 'string', allowHeaderFiltering:false, width:200},
+ { dataField: 'Descripcion', caption: 'Descripción', dataType: 'string', allowHeaderFiltering: false, hidingPriority: 2 },
+ { dataField: 'TipoString', caption: 'Tipo', dataType: 'string', allowHeaderFiltering: false, hidingPriority: 3 }-->
+      <dxo-toolbar>
+        <dxi-item location="before">
+          <div *dxTemplate class="informer">
+            <h2 class="count">{{dxDataGridOptions.totalCount}}</h2>
+            <span class="name">Registros</span>
+          </div>
+        </dxi-item>
+        <dxi-item locateInMenu="auto" location="after" showText="inMenu">
+          <div *dxTemplate>
+            <dx-button text="Recargar" icon="fa-solid fa-sync" hint="Recargar"
+              (onClick)="dataGrid.instance.refresh()"></dx-button>
+          </div>
+        </dxi-item>
+        <dxi-item locateInMenu="auto" location="after" showText="inMenu">
+          <div *dxTemplate>
+            <dx-button text="Nuevo" icon="fa-solid fa-plus" hint="Nuevo" (onClick)="dxDataGridOptions.onRegistrarClick()"></dx-button>
+          </div>
+        </dxi-item>
+        <dxi-item name="exportButton"></dxi-item>
+        <dxi-item name="columnChooserButton"></dxi-item>
+        <dxi-item name="searchPanel"></dxi-item>
+      </dxo-toolbar>
+    </dx-data-grid>
+    <dx-action-sheet [items]="dxActionSheetOptions.items" [title]="dxActionSheetOptions.title"
+      [usePopover]="dxActionSheetOptions.usePopover" [(visible)]="dxActionSheetOptions.visible"
+      [target]="dxActionSheetOptions.target" (onItemClick)="dxActionSheetOptions.onItemClick($event)" [width]="230">
+    </dx-action-sheet>
+  </div>
+</div>
