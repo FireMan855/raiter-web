@@ -30,6 +30,13 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/tipos-unidad-transporte/tipos-unidad-transporte.module').then(m => m.TiposUnidadTransporteModule),
     data: { roles: [RolesStrings.Administrador] },
     canMatch: [UsuarioGuard]
+  },
+  {
+    path: 'SustanciaPeligrosa',
+    component: MainLayoutComponent,
+    loadChildren: () => import('../app/modules/sustancias-peligrosas/sustancias-peligrosas.module').then(m => m.SustanciasPeligrosasModule),
+    data: { roles: [RolesStrings.Administrador] },
+    canMatch: [UsuarioGuard]
   }
   /*{
     path:'',
