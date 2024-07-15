@@ -5,6 +5,11 @@ import { DxDataGridComponent } from 'devextreme-angular';
 import { ColumnButtonClickEvent, ContentReadyEvent, ExportingEvent } from 'devextreme/ui/data_grid';
 import { DxActionItem, DxActionSheetOptions } from '../../../../shared/modules/devextrememain/interfaces/dxActionSheetOptions';
 import { ItemClickEvent } from 'devextreme/ui/action_sheet';
+import { Router } from '@angular/router';
+import { NotificacionService } from '../../../../shared/services/notificacion.service';
+import { LoadPanelService } from '../../../../shared/services/load-panel.service';
+import { SustanciaPeligrosaClient } from '../../../../shared/services/raiter-api-client.service';
+import { ApiArea } from '../../../../shared/services/raiter-api-client.utils';
 
 @Component({
   selector: 'app-sustancias-peligrosas-administracion',
@@ -28,6 +33,9 @@ export class SustanciasPeligrosasAdministracionPage {
       this.dxActionSheetOptions.visible = true;
       this.dxActionSheetOptions.target = columnaOpcion.cellElement;
     },
+    onRegistrarClick: () => {
+      this.router.navigateByUrl('/SustanciaPeligrosa/Registrar');
+    },
     onExporting: (evt: ExportingEvent) => {
       this.devExtremeService.exportarGridAExcel({
         exportingEvent: evt,
@@ -47,9 +55,25 @@ export class SustanciasPeligrosasAdministracionPage {
       visible: false,
       onItemClick: (evt: ItemClickEvent<DxActionItem<any>>) => {
         switch (evt.itemData?.command) {
-          case 'editar':
+          case 'detalles':
+            this.router.navigateByUrl(`/SustanciaPeligrosa/Detalles/${evt.itemData.data.SustanciaPeligrosaId}`);
             break;
-          case 'eliminar':            
+          case 'editar':
+            this.router.navigateByUrl(`/SustanciaPeligrosa/Editar/${evt.itemData.data.SustanciaPeligrosaId}`)
+            break;
+          case 'eliminar':    
+          this.notificacionService.confirm(`¿Desea eliminar la sustancia peligrosa [${evt.itemData.data?.Nombre}]?`)
+          .then(response => {
+            if (response) {
+              this.loadPanelService.mostrarLoadPanel('Eliminando sustancia peligrosa');
+              this.sustanciaPeligrosaCliente.eliminarSustanciaPeligrosa(evt.itemData?.data?.SustanciaPeligrosaId, ApiArea).subscribe(() => {
+                this.notificacionService.success(`La sustancia peligrosa [${evt.itemData?.data?.Nombre}] fue eliminada correctamente`);
+                this.dataGrid.instance.refresh();
+              }).add(() => {
+                this.loadPanelService.ocultarLoadPanel();
+              })
+            }
+          })        
             break;
         }
   
@@ -58,7 +82,10 @@ export class SustanciasPeligrosasAdministracionPage {
       target: ''
     }
   @ViewChild(DxDataGridComponent) dataGrid! : DxDataGridComponent;
-  constructor(private readonly devExtremeService : DevextremeService){
+  constructor(private readonly devExtremeService : DevextremeService, private readonly router : Router,
+    private readonly notificacionService : NotificacionService, private readonly loadPanelService: LoadPanelService,
+    private readonly sustanciaPeligrosaCliente : SustanciaPeligrosaClient
+  ){
     this.dataSource = devExtremeService.crearDevExtremeStore({
       key: 'SustanciaPeligrosaId',
       loadUrl: 'SustanciaPeligrosa/ObtenerSustanciasPeligrosasGrid'

@@ -1,0 +1,10 @@
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-pencil-alt fa-fw"></i> Editar sustancia peligrosa</h4>
+    </div>
+    <div class="card-body">
+        <app-sustancias-peligrosas-formulario (salirEmitter)="salir()" 
+        (guardarEmitter)="editarSustanciaPeligrosa($event)"
+        [modelEditar]="model!"></app-sustancias-peligrosas-formulario>
+    </div>
+</div>

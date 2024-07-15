@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-12 form-group">
+                <label for="txtClave"><i class="fas fa-hashtag fa-fw"></i> Clave <i class="fas fa-asterisk fa-fw fa-xs text-danger"></i></label>
+                <dx-text-box [maxLength]="50" [(value)]="model.Clave!" [readOnly]="soloLectura">
+                    <dx-validator [validationGroup]="vgSustanciaPeligrosa">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
+            </div>
+            <div class="col-12 form-group">
+                <label for="txtNombre"><i class="fas fa-font fa-fw"></i> Nombre <i class="fas fa-asterisk fa-fw fa-xs text-danger"></i></label>
+                <dx-text-box [maxLength]="255" [(value)]="model.Nombre!" [readOnly]="soloLectura">
+                    <dx-validator [validationGroup]="vgSustanciaPeligrosa">
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group">
+                <label for="txtDescripcion"><i class="fas fa-font fa-fw"></i> Descripción</label>
+                <dx-text-area [maxLength]="1000" [(value)]="model.Descripcion!" [readOnly]="soloLectura"></dx-text-area>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col form-group">
+                <dx-check-box class="mr-2" text="¿Requiere descripción?" [(value)]="model.RequiereDescripcion" [readOnly]="soloLectura"></dx-check-box>
+                <dx-check-box class="mr-2" text="¿Requiere temperatura?" [(value)]="model.RequiereTemperatura" [readOnly]="soloLectura"></dx-check-box>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <h5><i class="far fa-image"></i> Imagen</h5>
+        <img class="img-fluid" style="max-height:200px" [src]="urlImagen" id="imgSustancia"/>
+        <dx-file-uploader *ngIf="!soloLectura" selectButtonText="Seleccionar imagen" uploadMethod="POST" name="imagen" accept=".jpg, .jpeg, .bmp, .png"
+        [uploadUrl]="dxFileUploaderOptions.urlUploader" (onUploaded)="dxFileUploaderOptions.onUploaded($event)"></dx-file-uploader>
+    </div>
+</div>
+<div class="row">
+    <div class="col text-right">
+        <dx-button text="Salir" icon="fas fa-arrow-left" class="mr-sm-2 mb-2 mb-sm-0 d-block d-sm-inline-block"
+        (onClick)="onSalirClick()"></dx-button>
+        <dx-button *ngIf="!soloLectura" text="Guardar" icon="check" type="default" class="d-block d-sm-inline-block" (onClick)="onGuardarClick()"></dx-button>
+    </div>
+</div>
