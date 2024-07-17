@@ -37,6 +37,13 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/sustancias-peligrosas/sustancias-peligrosas.module').then(m => m.SustanciasPeligrosasModule),
     data: { roles: [RolesStrings.Administrador] },
     canMatch: [UsuarioGuard]
+  },
+  {
+    path: 'CategoriaViaje',
+    component: MainLayoutComponent,
+    loadChildren: () => import('../app/modules/categorias-viaje/categorias-viaje.module').then(m => m.CategoriasViajeModule),
+    data: { roles: [RolesStrings.Administrador] },
+    canMatch: [UsuarioGuard]
   }
   /*{
     path:'',

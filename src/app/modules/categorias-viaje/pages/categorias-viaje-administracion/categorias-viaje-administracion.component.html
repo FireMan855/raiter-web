@@ -1,0 +1,89 @@
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-cog fa-fw"></i> Administración de categorías de viaje</h4>
+    </div>
+    <div class="card-body">
+        <dx-data-grid [remoteOperations]="true" [allowColumnResizing]="true" [columnHidingEnabled]="true"
+            [rowAlternationEnabled]="true" [dataSource]="dataSource"
+            (onContentReady)="dxDataGridOptions.onContentReady($event)" (onExporting)="dxDataGridOptions.onExporting($event)">
+            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+            <dxo-search-panel [visible]="true" applyFilter="auto"></dxo-search-panel>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[20, 50, 100]" [showInfo]="true"></dxo-pager>
+            <dxo-selection mode="multiple" [allowSelectAll]="true" selectAllMode="page"
+                showCheckBoxesMode="onClick"></dxo-selection>
+            <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxi-column dataField="FechaRegistro" caption="Fecha de registro" dataType="datetime"
+                format="dd/MM/yyyy HH:mm" [width]="140" [allowHeaderFiltering]="false"
+                [hidingPriority]="4"></dxi-column>
+            <dxi-column dataField="Nombre" dataType="string" [width]="200" [allowHeaderFiltering]="false"></dxi-column>
+            <dxi-column dataField="Descripcion" caption="Descripción" dataType="string" [allowHeaderFiltering]="false"
+                [hidingPriority]="3"></dxi-column>
+            <dxi-column dataField="EsContenedor" caption="¿Contenedor?" dataType="boolean" falseText="NO" trueText="SI"
+                [showEditorAlways]="false" [width]="130" [allowHeaderFiltering]="false"
+                [hidingPriority]="2"></dxi-column>
+            <dxi-column dataField="EsIndefinido" caption="¿Indefinido?" dataType="boolean" falseText="NO" trueText="SI"
+                [showEditorAlways]="false" [width]="100" [allowHeaderFiltering]="false"
+                [hidingPriority]="1"></dxi-column>
+            <dxi-column caption="OPC" name="opciones" [allowExporting]="false" [allowFiltering]="false"
+                [allowResizing]="false" [allowSorting]="false" [showInColumnChooser]="false" [width]="50"
+                type="buttons">
+                <dxi-button icon="menu" [onClick]="dxDataGridOptions.onOpcClick"></dxi-button>
+            </dxi-column>
+            <dxo-toolbar>
+                <dxi-item location="before">
+                    <div *dxTemplate class="informer">
+                        <h2 class="count">{{dxDataGridOptions.totalCount}}</h2>
+                        <span class="name">Registros</span>
+                    </div>
+                </dxi-item>
+                <dxi-item locateInMenu="auto" location="after" showText="inMenu">
+                    <div *dxTemplate>
+                        <dx-button text="Recargar" icon="fa-solid fa-sync" hint="Recargar"
+                            (onClick)="dataGrid.instance.refresh()"></dx-button>
+                    </div>
+                </dxi-item>
+                <dxi-item locateInMenu="auto" location="after" showText="inMenu">
+                    <div *dxTemplate>
+                        <dx-button text="Nuevo" icon="fa-solid fa-plus" hint="Nuevo"
+                            (onClick)="dxDataGridOptions.onRegistrarClick()"></dx-button>
+                    </div>
+                </dxi-item>
+                <dxi-item name="exportButton"></dxi-item>
+                <dxi-item name="columnChooserButton"></dxi-item>
+                <dxi-item name="searchPanel"></dxi-item>
+            </dxo-toolbar>
+            <dxo-master-detail [enabled]="true" template="detail">
+            </dxo-master-detail>
+                <div *dxTemplate="let options of 'detail'">
+                    <!--<h5><i class="fas fa-caret-down"></i></h5>-->
+                    <dx-data-grid [dataSource]="options.data.CategoriasHijas" [allowColumnResizing]="true"
+                    [columnAutoWidth]="true" [showBorders]="true" [rowAlternationEnabled]="true">
+                    <dxo-filter-row [visible]="true" applyFilter="auto"></dxo-filter-row>
+                    <dxi-column dataField="Nombre" dataType="string" [width]="200" [allowHeaderFiltering]="false"></dxi-column>
+                    <dxi-column dataField="Descripcion" caption="Descripción" dataType="string" [allowHeaderFiltering]="false"
+                        [hidingPriority]="3"></dxi-column>
+                    <dxi-column dataField="EsContenedor" caption="¿Contenedor?" dataType="boolean" falseText="NO" trueText="SI"
+                        [showEditorAlways]="false" [width]="130" [allowHeaderFiltering]="false"
+                        [hidingPriority]="2"></dxi-column>
+                    <dxi-column dataField="EsIndefinido" caption="¿Indefinido?" dataType="boolean" falseText="NO" trueText="SI"
+                        [showEditorAlways]="false" [width]="100" [allowHeaderFiltering]="false"
+                        [hidingPriority]="1"></dxi-column>
+                    <dxi-column caption="OPC" name="opciones" [allowExporting]="false" [allowFiltering]="false"
+                        [allowResizing]="false" [allowSorting]="false" [showInColumnChooser]="false" [width]="50"
+                        type="buttons">
+                        <dxi-button icon="menu" [onClick]="dxDataGridChildOptions.onOpcClick"></dxi-button>
+                    </dxi-column>
+                </dx-data-grid>
+                </div>
+
+        </dx-data-grid>
+        <dx-action-sheet [items]="dxActionSheetOptions.items" [title]="dxActionSheetOptions.title"
+      [usePopover]="dxActionSheetOptions.usePopover" [(visible)]="dxActionSheetOptions.visible"
+      [target]="dxActionSheetOptions.target" (onItemClick)="dxActionSheetOptions.onItemClick($event)" [width]="250">
+    </dx-action-sheet>
+    <dx-action-sheet [items]="dxActionSheetChildOptions.items" [title]="dxActionSheetChildOptions.title"
+    [usePopover]="dxActionSheetChildOptions.usePopover" [(visible)]="dxActionSheetChildOptions.visible"
+    [target]="dxActionSheetChildOptions.target" (onItemClick)="dxActionSheetChildOptions.onItemClick($event)"></dx-action-sheet>
+    </div>
+</div>
