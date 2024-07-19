@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="row form-group" *ngIf="nombreCategoriaViajePadre">
+            <div class="col-12">
+                <label for="txtNombre"><i class="fas fa-scroll"></i> Categoría padre:</label>
+                <dx-text-box [readOnly]="true" [value]="nombreCategoriaViajePadre"></dx-text-box>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-12">
+                <label for="txtNombre"><i class="fas fa-font fa-fw"></i>Nombre: <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+                <dx-text-box [maxLength]="255" [(value)]="model.Nombre" [readOnly]="soloLectura">
+                    <dx-validator #txtNombreCategoriaValidador>
+                        <dxi-validation-rule type="required"></dxi-validation-rule>
+                    </dx-validator>
+                </dx-text-box>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-12">
+                <label for="txtDescripcion"><i class="fas fa-font fa-fw"></i>Descripción:</label>
+                <dx-text-area [maxLength]="1000" [(value)]="model.Descripcion!" [readOnly]="soloLectura"></dx-text-area>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-12 mb-2">
+                <dx-check-box text="¿Requiere alto?" [(value)]="model.RequiereAlto" [readOnly]="soloLectura"></dx-check-box>
+            </div>
+            <div class="col-12 mb-2">
+                <dx-check-box text="¿Requiere ancho?" [(value)]="model.RequiereAncho" [readOnly]="soloLectura"></dx-check-box>
+            </div>
+            <div class="col-12 mb-2">
+                <dx-check-box text="¿Requiere largo?" [(value)]="model.RequiereLargo" [readOnly]="soloLectura"></dx-check-box>
+            </div>
+            <div class="col-12 mb-2">
+                <dx-check-box text="¿Requiere peso?" [(value)]="model.RequierePeso" [readOnly]="soloLectura"></dx-check-box>
+            </div>
+            <div class="col-12 mb-3">
+                <dx-check-box text="¿Requiere temperatura?" [(value)]="model.RequiereTemperatura" [readOnly]="soloLectura"></dx-check-box>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center form-content">
+                <div class="col-12">
+                    <h5><i class="fas fa-image fa-fw"></i> Imagen</h5>
+                </div>
+                <div class="col-12">
+                    <img id="imgFotoCategoriaViaje" [src]="imagenSrc" alt="Foto de categoria" class="img-fluid img-thumbnail" style="max-height:350px" />
+                </div>
+                <div class="col-12" *ngIf="!soloLectura">
+                    <dx-file-uploader *ngIf="!soloLectura" selectButtonText="Seleccionar imagen" uploadMethod="POST" name="imagenCategoria" accept=".jpg, .jpeg, .bmp, .png"
+                    [uploadUrl]="dxFileUploaderOptions.urlUploader" (onUploaded)="dxFileUploaderOptions.onUploaded($event)"></dx-file-uploader>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-end mt-3" id="botonesPopUp" >
+    <div class="col-md-8 text-right">
+        <dx-button text="Salir" icon="fas fa-arrow-left" class=" mr-sm-2 mb-2 mb-sm-0 d-block d-sm-inline-block" (onClick)="salir()"></dx-button>
+        <dx-button *ngIf="!soloLectura" text="Guardar" icon="fas fa-save" type="default" class=" d-block d-sm-inline-block"
+        (onClick)="guardar()"></dx-button>       
+    </div>
+</div>

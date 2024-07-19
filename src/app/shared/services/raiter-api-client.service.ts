@@ -84,6 +84,24 @@ export class CategoriaViajeClient {
             result401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
             return throwException("Si no se ha iniciado sesi\u00f3n o no se cuenta con los permisos para ver la informaci\u00f3n de categorias", status, _responseText, _headers, result401);
             }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result404: any = null;
+            result404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RaiterException;
+            return throwException("Sucede cuando no se encuentra la categ\u00f3r\u00eda de viaje buscada", status, _responseText, _headers, result404);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            result400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RaiterException;
+            return throwException("Sucede cuando no se env\u00eda un id de categor\u00eda de viaje v\u00e1lida", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            result500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RaiterException;
+            return throwException("A server side error occurred.", status, _responseText, _headers, result500);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
@@ -11287,6 +11305,63 @@ export class SolicitudViajeClient {
     }
 
     /**
+     * Establece como iniciada la ruta de una solicitud de viaje desde el portal web
+     */
+    iniciarRutaWeb(peticion: IniciarSolicitudViajeWebPeticion, area: string): Observable<boolean> {
+        let url_ = this.baseUrl + "/{area}/SolicitudViaje/IniciarRutaWeb";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(peticion);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processIniciarRutaWeb(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processIniciarRutaWeb(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<boolean>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<boolean>;
+        }));
+    }
+
+    protected processIniciarRutaWeb(response: HttpResponseBase): Observable<boolean> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as boolean;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * Permite dar por completada una solicitud de viaje al momento en el que se completa el viaje
      * @param peticion Datos para marcar como completada la petición
      */
@@ -11324,6 +11399,64 @@ export class SolicitudViajeClient {
     }
 
     protected processCompletarSolicitud(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * Permite dar por completada una solicitud de viaje al momento en el que se completa el viaje desde el portal web
+     * @param peticion Datos para marcar como completada la petición
+     */
+    completarSolicitudWeb(peticion: CompletarSolicitudWebPeticion, area: string): Observable<string> {
+        let url_ = this.baseUrl + "/{area}/SolicitudViaje/CompletarSolicitudWeb";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(peticion);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCompletarSolicitudWeb(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCompletarSolicitudWeb(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<string>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<string>;
+        }));
+    }
+
+    protected processCompletarSolicitudWeb(response: HttpResponseBase): Observable<string> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -12828,6 +12961,110 @@ export class SolicitudViajeClient {
         }
         return _observableOf(null as any);
     }
+
+    obtenerEstadosMercanciaCombo(area: string): Observable<SelectListUtil[]> {
+        let url_ = this.baseUrl + "/{area}/SolicitudViaje/ObtenerEstadosMercanciaCombo";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObtenerEstadosMercanciaCombo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObtenerEstadosMercanciaCombo(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<SelectListUtil[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<SelectListUtil[]>;
+        }));
+    }
+
+    protected processObtenerEstadosMercanciaCombo(response: HttpResponseBase): Observable<SelectListUtil[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as SelectListUtil[];
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obtenerCodigoEntrega(solicitudViajeId: string | undefined, area: string): Observable<string> {
+        let url_ = this.baseUrl + "/{area}/SolicitudViaje/ObtenerCodigoEntrega?";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        if (solicitudViajeId === null)
+            throw new Error("The parameter 'solicitudViajeId' cannot be null.");
+        else if (solicitudViajeId !== undefined)
+            url_ += "solicitudViajeId=" + encodeURIComponent("" + solicitudViajeId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObtenerCodigoEntrega(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObtenerCodigoEntrega(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<string>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<string>;
+        }));
+    }
+
+    protected processObtenerCodigoEntrega(response: HttpResponseBase): Observable<string> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable({
@@ -13236,6 +13473,30 @@ export class SustanciaPeligrosaClient {
             let result200: any = null;
             result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as SustanciaPeligrosaRespuesta;
             return _observableOf(result200);
+            }));
+        } else if (status === 401) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result401: any = null;
+            result401 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as string;
+            return throwException("Si no se ha iniciado sesi\u00f3n o no se cuenta con los permisos para ver las sustancias peligrosas", status, _responseText, _headers, result401);
+            }));
+        } else if (status === 404) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result404: any = null;
+            result404 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RaiterException;
+            return throwException("Sucede cuando no se encuentra la sustancia peligrosa requerida", status, _responseText, _headers, result404);
+            }));
+        } else if (status === 400) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result400: any = null;
+            result400 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RaiterException;
+            return throwException("Sucede cuando no se env\u00eda un id de sustancia peligrosa v\u00e1lido", status, _responseText, _headers, result400);
+            }));
+        } else if (status === 500) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result500: any = null;
+            result500 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as RaiterException;
+            return throwException("A server side error occurred.", status, _responseText, _headers, result500);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -19914,6 +20175,90 @@ export interface ObtenerCategoriasViajePadreRespuesta {
     TieneCategoriasHijas: boolean;
 }
 
+export interface Exception {
+    Message: string;
+    InnerException?: Exception | undefined;
+    Source?: string | undefined;
+    StackTrace?: string | undefined;
+}
+
+export interface RaiterException extends Exception {
+    Mensaje?: string | undefined;
+    Detalles?: string | undefined;
+    Codigo?: string | undefined;
+    ObjetoNegocio?: any | undefined;
+    HttpStatusCode: HttpStatusCode;
+}
+
+export enum HttpStatusCode {
+    Continue = 100,
+    SwitchingProtocols = 101,
+    Processing = 102,
+    EarlyHints = 103,
+    OK = 200,
+    Created = 201,
+    Accepted = 202,
+    NonAuthoritativeInformation = 203,
+    NoContent = 204,
+    ResetContent = 205,
+    PartialContent = 206,
+    MultiStatus = 207,
+    AlreadyReported = 208,
+    IMUsed = 226,
+    MultipleChoices = 300,
+    Ambiguous = 300,
+    MovedPermanently = 301,
+    Moved = 301,
+    Found = 302,
+    Redirect = 302,
+    SeeOther = 303,
+    RedirectMethod = 303,
+    NotModified = 304,
+    UseProxy = 305,
+    Unused = 306,
+    TemporaryRedirect = 307,
+    RedirectKeepVerb = 307,
+    PermanentRedirect = 308,
+    BadRequest = 400,
+    Unauthorized = 401,
+    PaymentRequired = 402,
+    Forbidden = 403,
+    NotFound = 404,
+    MethodNotAllowed = 405,
+    NotAcceptable = 406,
+    ProxyAuthenticationRequired = 407,
+    RequestTimeout = 408,
+    Conflict = 409,
+    Gone = 410,
+    LengthRequired = 411,
+    PreconditionFailed = 412,
+    RequestEntityTooLarge = 413,
+    RequestUriTooLong = 414,
+    UnsupportedMediaType = 415,
+    RequestedRangeNotSatisfiable = 416,
+    ExpectationFailed = 417,
+    MisdirectedRequest = 421,
+    UnprocessableEntity = 422,
+    Locked = 423,
+    FailedDependency = 424,
+    UpgradeRequired = 426,
+    PreconditionRequired = 428,
+    TooManyRequests = 429,
+    RequestHeaderFieldsTooLarge = 431,
+    UnavailableForLegalReasons = 451,
+    InternalServerError = 500,
+    NotImplemented = 501,
+    BadGateway = 502,
+    ServiceUnavailable = 503,
+    GatewayTimeout = 504,
+    HttpVersionNotSupported = 505,
+    VariantAlsoNegotiates = 506,
+    InsufficientStorage = 507,
+    LoopDetected = 508,
+    NotExtended = 510,
+    NetworkAuthenticationRequired = 511,
+}
+
 /** Represents a load result. */
 export interface LoadResult {
     /** A resulting dataset. */
@@ -20070,90 +20415,6 @@ export interface ResultadoPaginadoRespuestaOfObtenerCategoriasViajeHijasRespuest
 export interface RespuestaGuardadoArchivoTemporal {
     NombreArchivo?: string | undefined;
     ArchivoBase64?: string | undefined;
-}
-
-export interface Exception {
-    Message: string;
-    InnerException?: Exception | undefined;
-    Source?: string | undefined;
-    StackTrace?: string | undefined;
-}
-
-export interface RaiterException extends Exception {
-    Mensaje?: string | undefined;
-    Detalles?: string | undefined;
-    Codigo?: string | undefined;
-    ObjetoNegocio?: any | undefined;
-    HttpStatusCode: HttpStatusCode;
-}
-
-export enum HttpStatusCode {
-    Continue = 100,
-    SwitchingProtocols = 101,
-    Processing = 102,
-    EarlyHints = 103,
-    OK = 200,
-    Created = 201,
-    Accepted = 202,
-    NonAuthoritativeInformation = 203,
-    NoContent = 204,
-    ResetContent = 205,
-    PartialContent = 206,
-    MultiStatus = 207,
-    AlreadyReported = 208,
-    IMUsed = 226,
-    MultipleChoices = 300,
-    Ambiguous = 300,
-    MovedPermanently = 301,
-    Moved = 301,
-    Found = 302,
-    Redirect = 302,
-    SeeOther = 303,
-    RedirectMethod = 303,
-    NotModified = 304,
-    UseProxy = 305,
-    Unused = 306,
-    TemporaryRedirect = 307,
-    RedirectKeepVerb = 307,
-    PermanentRedirect = 308,
-    BadRequest = 400,
-    Unauthorized = 401,
-    PaymentRequired = 402,
-    Forbidden = 403,
-    NotFound = 404,
-    MethodNotAllowed = 405,
-    NotAcceptable = 406,
-    ProxyAuthenticationRequired = 407,
-    RequestTimeout = 408,
-    Conflict = 409,
-    Gone = 410,
-    LengthRequired = 411,
-    PreconditionFailed = 412,
-    RequestEntityTooLarge = 413,
-    RequestUriTooLong = 414,
-    UnsupportedMediaType = 415,
-    RequestedRangeNotSatisfiable = 416,
-    ExpectationFailed = 417,
-    MisdirectedRequest = 421,
-    UnprocessableEntity = 422,
-    Locked = 423,
-    FailedDependency = 424,
-    UpgradeRequired = 426,
-    PreconditionRequired = 428,
-    TooManyRequests = 429,
-    RequestHeaderFieldsTooLarge = 431,
-    UnavailableForLegalReasons = 451,
-    InternalServerError = 500,
-    NotImplemented = 501,
-    BadGateway = 502,
-    ServiceUnavailable = 503,
-    GatewayTimeout = 504,
-    HttpVersionNotSupported = 505,
-    VariantAlsoNegotiates = 506,
-    InsufficientStorage = 507,
-    LoopDetected = 508,
-    NotExtended = 510,
-    NetworkAuthenticationRequired = 511,
 }
 
 /** Clase con datos para el registro de un chofer */
@@ -21870,6 +22131,17 @@ export interface IniciarSolicitudViajePeticion {
     Direccion?: string | undefined;
 }
 
+export interface IniciarSolicitudViajeWebPeticion {
+    SolicitudViajeId: string;
+    Comentario?: string | undefined;
+    IncluirCartaPorte: boolean;
+    IncluirFacturaComercial: boolean;
+    IncluirListaEmpaque: boolean;
+    Ubicacion?: string | undefined;
+    Direccion?: string | undefined;
+    ImagenBase64?: string | undefined;
+}
+
 export interface CompletarSolicitudPeticion {
     SolicitudId: string;
     UbicacionFirma?: string | undefined;
@@ -21882,6 +22154,13 @@ export enum EstadoMercancia {
     MercanciaDaniada = 1,
     MercanciaIncompleta = 2,
     MercanciaIncompletaDaniada = 3,
+}
+
+export interface CompletarSolicitudWebPeticion {
+    SolicitudId: string;
+    UbicacionFirma?: string | undefined;
+    CodigoEntrega?: string | undefined;
+    EstadoMercancia: EstadoMercancia;
 }
 
 export interface EvaluarViajePeticion {

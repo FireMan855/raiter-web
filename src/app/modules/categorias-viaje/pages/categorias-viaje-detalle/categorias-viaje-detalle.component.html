@@ -1,0 +1,8 @@
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-eye fa-fw"></i> {{nombreCategoriaViajePadre ? 'Detalles de subcategoría de viaje' : 'Detalles de categoría de viaje'}}</h4>
+    </div>
+    <div class="card-body">
+       <app-categorias-viaje-formulario [nombreCategoriaViajePadre]="nombreCategoriaViajePadre" [soloLectura]="true" (onSalirEmitter)="salir()" [modelEditar]="model"></app-categorias-viaje-formulario>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-plus fa-fw"></i> {{ categoriaViajePadreId ? 'Registrar subcategoría de viaje' : 'Registrar categoría de viaje'}}</h4>
+    </div>
+    <div class="card-body">
+       <app-categorias-viaje-formulario [nombreCategoriaViajePadre]="nombreCategoriaViajePadre" 
+       (onSalirEmitter)="salir()" (onGuardarEmitter)="registrarCategoriaViaje($event)"></app-categorias-viaje-formulario>
+    </div>
+</div>

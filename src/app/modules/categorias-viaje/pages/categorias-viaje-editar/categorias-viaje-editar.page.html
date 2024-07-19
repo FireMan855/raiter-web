@@ -1,0 +1,9 @@
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-pencil-alt fa-fw"></i> {{categoriaViajePadreId ? 'Editar subcategoría de viaje' : 'Editar categoría de viaje' }}</h4>
+    </div>
+    <div class="card-body">
+       <app-categorias-viaje-formulario [modelEditar]="model" (onSalirEmitter)="salir()"
+       (onGuardarEmitter)="editarCategoriaViaje($event)" [nombreCategoriaViajePadre]="nombreCategoriaViajePadre"></app-categorias-viaje-formulario>
+    </div>
+</div>
