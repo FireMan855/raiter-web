@@ -12,6 +12,11 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/autenticacion/autenticacion.module').then(m => m.AutenticacionModule)
   },
   {
+    path: 'Usuarios',
+    component: MainLayoutComponent,
+    loadChildren: () => import('../app/modules/usuarios/usuarios.module').then(m => m.UsuariosModule),
+  },
+  {
     path: '',
     component: MainLayoutComponent,
     loadChildren: () => import('../app/modules/inicio/inicio.module').then(m => m.InicioModule),

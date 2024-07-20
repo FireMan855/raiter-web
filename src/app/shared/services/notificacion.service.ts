@@ -38,9 +38,9 @@ export class NotificacionService {
    * @param mensaje Mensaje corto principal
    * @param detalles Detalles adicionales (opciones)
    */
-  public confirm(mensaje: string, detalles?: string): Promise<boolean> {
+  public confirm(mensaje: string, titulo : string ="Confirmación", detalles?: string): Promise<boolean> {
     detalles && detalles.trim() !== '' ? detalles = `<br/><p>${detalles}</p>` : detalles = "";
-    return confirm(`<h5 class="text-center"><i class="fas fa-circle-question fa-3x text-warning"></i><br/>${mensaje}</h5>${detalles}`, "Confirmación");
+    return confirm(`<h5 class="text-center"><i class="fas fa-circle-question fa-3x text-warning"></i><br/>${mensaje}</h5>${detalles}`, titulo);
   }
    /**
    * Método que muestra un cuadro de dialogo para noitificacion de advertencia o error
