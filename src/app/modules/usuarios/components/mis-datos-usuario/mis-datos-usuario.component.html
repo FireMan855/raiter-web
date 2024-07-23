@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-12 text-center">
+        <img alt="Foto" id="imgFotoUsuario" src="/assets/imagenes/user_black.png" />
+    </div>
+</div>
+<div class="row h6">
+    <div class="col-12 text-center">
+        <i class="fas fa-user"></i> <span id="spanNombreUsuario"> {{modelMostrar.UserName ?? 'Cargando nombre...'}}</span>
+    </div>
+</div>
+<div class="row h6">
+    <div class="col-12 text-center">
+        <i class="fas fa-tag"></i> <span id="spanRol"> {{modelMostrar.Rol ?? 'Cargando rol...'}}</span>
+    </div>
+</div>
+<div class="row h6">
+    <div class="col-12 text-center">
+        <i class="fas fa-envelope"></i> <a id="linkCorreoElectronico" href="mailto:"><span id="spanCorreoElectronico"> {{modelMostrar.Email ?? 'Cargando e-mail...'}}</span></a>
+    </div>
+</div>
+<div class="row h6" *ngIf="modelMostrar.PhoneNumber">
+    <div class="col-12 text-center">
+        <i class="fas fa-phone-alt"></i> <span id="spanNumeroTelefono"> {{modelMostrar.PhoneNumber}}</span>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col text-center">
+        <dx-button icon="fas fa-lock" text="Cambiar contraseña" (onClick)="cambiarContrasenia()"></dx-button>
+        <dx-button icon="fas fa-user-edit" text="Editar" (onClick)="editarMisDatos()"></dx-button>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col text-center">
+        <dx-button icon="fas fa-scroll" text="Subir constancia de situación fiscal" type="default"></dx-button>
+    </div>
+</div>

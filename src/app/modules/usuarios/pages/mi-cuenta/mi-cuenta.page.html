@@ -1,0 +1,80 @@
+<div class="row form-group">
+    <div class="col-md-4 col-12">
+        <div class="card">
+            <div class="card-body">
+                <app-mis-datos-usuario [modelMostrar]="model!"></app-mis-datos-usuario>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-12">
+        <div class="card">
+            <div class="card-body">
+                <app-informacion-interes [transportista]="model?.Transportista"></app-informacion-interes>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col align-self-start">
+                        <h4><i class="fas fa-map-marker-alt"></i> Mis lugares de interés</h4>
+
+                    </div>
+                    <div class="col align-self-end text-right">
+                        <div id="btnEditarLugares"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="divDatosFacturacion" class="mt-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col align-self-start">
+                            <h4><i class="fas fa-map-marker-alt"></i> Mis datos de facturación</h4>
+    
+                        </div>
+                        <div class="col align-self-end text-right">
+                            <div id="btnEditarLugares"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div id="popUpMunicipio">
+    <div id="popUpMunicipioTemplate" class="d-none">
+        <div class="row" id="estadoCombo">
+            <div class="col-12 form-group">
+                <label>Estado</label>
+                <div id="selectEstado"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group">
+                <label>Municipio</label>
+                <div id="selectMunicipio"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-right">
+                <div id="btnCancelarMunicipio"></div>
+                <div id="btnGuardarMunicipio"></div>
+            </div>
+        </div>
+    </div>
+</div>-->

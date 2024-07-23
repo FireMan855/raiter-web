@@ -1,0 +1,35 @@
+<div class="row text-center">
+    <div class="col">
+        <h4>INFORMACIÓN DE INTERÉS</h4>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col form-group">
+        <dx-button text="Terminos y condiciones" icon="fas fa-file-alt" stylingMode="outlined" type="default" (onClick)="verTerminosYCondiciones()"></dx-button>
+    </div>
+    <div class="col form-group">
+        <dx-button text="Politicas de uso" icon="fas fa-file-alt" stylingMode="outlined" type="default" (onClick)="verPoliticasDeUso()"></dx-button>
+    </div>
+    <div class="col form-group">
+        <dx-button text="Aviso de privacidad" icon="fas fa-file-alt" stylingMode="outlined" type="default" (onClick)="verAvisoDePrivacidad()"></dx-button>
+    </div>
+    <div class="col form-group">
+        <dx-button text="Politica de devoluciones" icon="fas fa-file-alt" stylingMode="outlined" type="default" (onClick)="verPoliticaDeDevoluciones()"></dx-button>
+    </div>
+</div>
+<hr />
+<div class="row text-center" id="divTransportista" *ngIf="transportista">
+    <div class="col">
+        <div class="row form-group">
+            <div class="col h5">
+                TRANSPORTISTA | {{ transportista.RazonSocial + ' (' + transportista.Rfc + ')'}} | <span class="badge badge-info" id="spanEstadoTransportista"> {{ transportista.EstadoVerificacion?.EstadoString }}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <dx-button icon="edit" text="Editar datos de transportista"></dx-button>
+            </div>
+        </div>
+        
+    </div>
+</div>

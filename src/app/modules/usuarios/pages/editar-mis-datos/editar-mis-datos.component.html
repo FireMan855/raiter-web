@@ -1,0 +1,63 @@
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-fw fa-user-edit"></i> Editar mis datos de usuario</h4>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row form-group">
+                    <div class="col">
+                        <label class="label-form"><i class="fas fa-envelope fa-fw"></i>Correo electrónico: <i class="fas fa-fw fa-asterisk fa-sm text-danger"></i></label>
+                        <dx-text-box [maxLength]="255" [(value)]="model.Email!">
+                            <dx-validator [validationGroup]="vgEditarMisDatos">
+                                <dxi-validation-rule type="email"></dxi-validation-rule>
+                                <dxi-validation-rule type="required"></dxi-validation-rule>
+                            </dx-validator>
+                        </dx-text-box>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        <label class="label-form"><i class="fas fa-font fa-fw"></i>Nombre(s): <i class="fas fa-fw fa-asterisk fa-sm text-danger"></i></label>
+                        <dx-text-box [maxLength]="255" [(value)]="model.Nombre!">
+                            <dx-validator [validationGroup]="vgEditarMisDatos">
+                                <dxi-validation-rule type="required"></dxi-validation-rule>
+                            </dx-validator>
+                        </dx-text-box>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        <label class="label-form"><i class="fas fa-font fa-fw"></i>Apellido paterno: <i class="fas fa-fw fa-asterisk fa-sm text-danger"></i></label>
+                        <dx-text-box [maxLength]="255" [(value)]="model.Paterno!">
+                            <dx-validator [validationGroup]="vgEditarMisDatos">
+                                <dxi-validation-rule type="required"></dxi-validation-rule>
+                            </dx-validator>
+                        </dx-text-box>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        <label class="label-form"><i class="fas fa-envelope fa-fw"></i>Apellido materno:</label>
+                        <dx-text-box [maxLength]="255" [(value)]="model.Materno!"></dx-text-box>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        <label class="label-form"><i class="fas fa-phone fa-fw"></i>Telefono:</label>
+                        <dx-text-box [maxLength]="255" [(value)]="model.Telefono!"></dx-text-box>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col text-right">
+                        <dx-button text="Salir" class="mr-2" icon="fas fa-arrow-left" (onClick)="salir()"></dx-button>
+                        <dx-button text="Guardar" icon="fas fa-save" type="default" (onClick)="guardar()"></dx-button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+    </div>
+</div>

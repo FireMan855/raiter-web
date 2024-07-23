@@ -7,3 +7,7 @@ export const usuarioRaiterSelector = createSelector(
     raiterStateSelector,
     r => r.usuario
 )
+export const usuarioRaiterIdSelector = createSelector(
+    raiterStateSelector,
+    r => r.usuario?.Id
+)

@@ -1,7 +1,7 @@
 <nav class="sidebar sidebar-offcanvas" [ngClass]="{'active': menuDerechoAbierto}" id="sidebar">
     <ul class="nav">
         <li class="nav-item nav-profile">
-            <a asp-controller="Usuario" asp-action="MiCuenta" [title]='nombreUsuario ?? "Invitado"' class="nav-link">
+            <a routerLink="/Usuarios/MiCuenta" [title]='nombreUsuario ?? "Invitado"' class="nav-link">
                 <div class="profile-image">
                     <img class="img-xs rounded-circle" src="assets/imagenes/user_black.png" alt="profile image">
                     <div class="dot-indicator bg-success"></div>
