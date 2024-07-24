@@ -12,6 +12,8 @@ import { CambiarContraseniaPage } from './pages/cambiar-contrasenia/cambiar-cont
 import { SubirConstanciaSituacionFiscalComponent } from '../../shared/components/subir-constancia-situacion-fiscal/subir-constancia-situacion-fiscal.component';
 import { DetallesUsuarioPage } from './pages/detalles-usuario/detalles-usuario.page';
 import { UsuariosFormularioAdministracionComponent } from './components/usuarios-formulario-administracion/usuarios-formulario-administracion.component';
+import { MisNotificacionesPage } from './pages/mis-notificaciones/mis-notificaciones.page';
+import { DateFromNowPipe } from '../../shared/pipes/date-from-now.pipe';
 
 
 @NgModule({
@@ -23,13 +25,15 @@ import { UsuariosFormularioAdministracionComponent } from './components/usuarios
     EditarMisDatosComponent,
     CambiarContraseniaPage,
     DetallesUsuarioPage,
-    UsuariosFormularioAdministracionComponent
+    UsuariosFormularioAdministracionComponent,
+    MisNotificacionesPage
   ],
   imports: [
     CommonModule,
     UsuariosRoutingModule,
     DevextrememainModule,
-    SubirConstanciaSituacionFiscalComponent
+    SubirConstanciaSituacionFiscalComponent,
+    DateFromNowPipe
   ]
 })
 export class UsuariosModule { }
