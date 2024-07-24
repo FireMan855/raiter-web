@@ -23,6 +23,9 @@ export class MisDatosUsuarioComponent {
       this.model = this.generarModeloVacio();
     }
   }
+  popUpConstanciaOptions ={
+    visible : false
+  }
   constructor(private readonly router: Router){}
 
   private generarModeloVacio() : MisDatosUsuarioModel{
@@ -39,5 +42,7 @@ export class MisDatosUsuarioComponent {
   cambiarContrasenia(){
     this.router.navigateByUrl('/Usuarios/CambiarMiContrasenia');
   }
-
+  mostrarConstanciaFiscal(){
+    this.popUpConstanciaOptions.visible = true;
+  }
 }

@@ -8,6 +8,7 @@ import { NotificacionService } from '../../../../shared/services/notificacion.se
 import { LoadPanelService } from '../../../../shared/services/load-panel.service';
 import { UsuarioClient } from '../../../../shared/services/raiter-api-client.service';
 import { ApiArea } from '../../../../shared/services/raiter-api-client.utils';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-administracion',
@@ -27,6 +28,8 @@ export class UsuariosAdministracionComponent {
         //{ command: 'desactivar', text: 'Desa', icon: 'fas fa-bam', data: columnaOpcion.data },
         //{ command: 'editar', text: 'Editar', icon: 'fas fa-pencil-alt', data: columnaOpcion.data },
         //{ command: 'eliminar', text: 'Eliminar', icon: 'fas fa-trash', type: 'danger', stylingMode: 'contained', data: columnaOpcion.data }
+        { command: 'detalles', icon: 'fas fa-eye', text: 'Detalles', data: columnaOpcion.data},
+        { command: 'constancia-fiscal', icon: 'fas fa-scroll', text:'Constancia de situación fiscal', data: columnaOpcion.data}
       ];
       if (columnaOpcion.data.EstaActivo)
         this.dxActionSheetOptions.items.push({ command: 'desactivar', icon: 'fas fa-ban', type: 'danger', text: 'Desactivar', data: columnaOpcion.data });
@@ -59,7 +62,7 @@ export class UsuariosAdministracionComponent {
 
 
   constructor(private readonly devExtremeService: DevextremeService, private readonly notificacionService: NotificacionService,
-    private readonly loadPanelService: LoadPanelService, private readonly usuariosClient: UsuarioClient
+    private readonly loadPanelService: LoadPanelService, private readonly usuariosClient: UsuarioClient, private readonly router: Router
   ) {
     this.dataSource = devExtremeService.crearDevExtremeStore({
       key: 'Id',
@@ -74,6 +77,9 @@ export class UsuariosAdministracionComponent {
     onItemClick: (evt: ItemClickEvent<DxActionItem<any>>) => {
       let dataRow = evt.itemData?.data;
       switch (evt.itemData?.command) {
+        case 'detalles':
+          this.router.navigateByUrl('/Usuarios/Detalles/' + evt.itemData.data.Id);
+          break;
         case 'desactivar':
           this.notificacionService.confirm('¿Desea desactivar al usuario? [' + dataRow.Nombre + ' ' + dataRow.Paterno + (dataRow.Materno ? ' ' + dataRow.Materno : '') + ']. <br> Una vez desactivado el usuario no podrá autenticarse en la plataforma ni hacer uso de las características ofrecidas por ésta.', 'Desactivación de usuario').then(response => {
             if (response) {
@@ -100,10 +106,20 @@ export class UsuariosAdministracionComponent {
             }
           })
           break;
+          case 'constancia-fiscal':
+            this.dxPopUpConstanciaOptions.usuarioId = dataRow.Id;
+            this.dxPopUpConstanciaOptions.nombreUsuario = dataRow.UserName;
+            this.dxPopUpConstanciaOptions.visible = true;
+            break;
       }
 
     },
     items: [],
     target: ''
+  }
+  dxPopUpConstanciaOptions = {
+    usuarioId: '',
+    nombreUsuario : '',
+    visible :false
   }
 }

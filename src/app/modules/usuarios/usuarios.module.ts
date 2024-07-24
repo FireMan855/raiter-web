@@ -9,6 +9,9 @@ import { InformacionInteresComponent } from './components/informacion-interes/in
 import { MisDatosUsuarioComponent } from './components/mis-datos-usuario/mis-datos-usuario.component';
 import { EditarMisDatosComponent } from './pages/editar-mis-datos/editar-mis-datos.component';
 import { CambiarContraseniaPage } from './pages/cambiar-contrasenia/cambiar-contrasenia.page';
+import { SubirConstanciaSituacionFiscalComponent } from '../../shared/components/subir-constancia-situacion-fiscal/subir-constancia-situacion-fiscal.component';
+import { DetallesUsuarioPage } from './pages/detalles-usuario/detalles-usuario.page';
+import { UsuariosFormularioAdministracionComponent } from './components/usuarios-formulario-administracion/usuarios-formulario-administracion.component';
 
 
 @NgModule({
@@ -18,12 +21,15 @@ import { CambiarContraseniaPage } from './pages/cambiar-contrasenia/cambiar-cont
     InformacionInteresComponent,
     MisDatosUsuarioComponent,
     EditarMisDatosComponent,
-    CambiarContraseniaPage
+    CambiarContraseniaPage,
+    DetallesUsuarioPage,
+    UsuariosFormularioAdministracionComponent
   ],
   imports: [
     CommonModule,
     UsuariosRoutingModule,
-    DevextrememainModule
+    DevextrememainModule,
+    SubirConstanciaSituacionFiscalComponent
   ]
 })
 export class UsuariosModule { }

@@ -54,7 +54,14 @@
         <dx-action-sheet [items]="dxActionSheetOptions.items" [title]="dxActionSheetOptions.title"
         [usePopover]="dxActionSheetOptions.usePopover" [(visible)]="dxActionSheetOptions.visible"
         [target]="dxActionSheetOptions.target" (onItemClick)="dxActionSheetOptions.onItemClick($event)"
-        [width]="230">
+        [width]="320">
     </dx-action-sheet>
     </div>
 </div>
+<dx-popup [deferRendering]="false" title="Constancia de situación fiscal" [showTitle]="true"
+[maxWidth]="768" height="auto" [(visible)]="dxPopUpConstanciaOptions.visible">
+<div *dxTemplate="let data of 'content'">
+    <app-subir-constancia-situacion-fiscal [soloLectura]="true" [usuarioId]="dxPopUpConstanciaOptions.usuarioId"
+    [nombreUsuario]="dxPopUpConstanciaOptions.nombreUsuario"></app-subir-constancia-situacion-fiscal>
+</div>
+</dx-popup>

@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="row form-group">
+            <!--<div class="row form-group">-->
+            <div class="col-md-6 col-12 form-group">
+                <label for="txtNombre"><i class="fas fa-font fa-fw"></i> Nombre(s) <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+                <dx-text-box [maxLength]="255" [readOnly]="soloLectura" [(value)]="model.Nombre!"></dx-text-box>
+            </div>
+            <div class="col-md-6 col-12 form-group">
+                <label for="txtPaterno"><i class="fas fa-font fa-fw"></i> Apellido paterno <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+                <dx-text-box [maxLength]="255" [readOnly]="soloLectura" [(value)]="model.Paterno!"></dx-text-box>
+            </div>
+            <div class="col-md-6 col-12 form-group">
+                <label for="txtMaterno"><i class="fas fa-font fa-fw"></i> Apellido materno</label>
+                <dx-text-box [maxLength]="255" [readOnly]="soloLectura" [(value)]="model.Materno!"></dx-text-box>
+            </div>
+            <!--</div>-->
+            <!--<div class="row form-group">-->
+            <div class="col-md-6 col-12 form-group">
+                <label for="txtEmail"><i class="fas fa-envelope fa-fw"></i> E-mail <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+                <dx-text-box [maxLength]="255" [readOnly]="soloLectura" [(value)]="model.Email!"></dx-text-box>
+            </div>
+            <div class="col-md-6 col-12 form-group">
+                <label for="txtTelefono"><i class="fas fa-phone-alt fa-fw"></i> Teléfono</label>
+                <dx-text-box [readOnly]="soloLectura" [(value)]="model.PhoneNumber!"></dx-text-box>
+            </div>
+            <div class="col-md-6 col-12 form-group">
+                <label for="txtRol"><i class="fas fa-user-tag fa-fw"></i> Rol/Perfil <i class="fas fa-asterisk fa-xs text-danger"></i></label>
+                <dx-select-box [dataSource]="comboRolesOptions.url" [readOnly]="soloLectura" [(value)]="model.Rol!"></dx-select-box>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="col-md-4">
+        <app-subir-constancia-situacion-fiscal [soloLectura]="true" [usuarioId]="model.Id"></app-subir-constancia-situacion-fiscal>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col text-right">
+        <dx-button text="Salir" icon="fas fa-arrow-left" (onClick)="onSalir.emit()"></dx-button>
+        <!--<div id="btnSalir" class="mr-sm-2 mb-2 mb-sm-0 d-block d-sm-inline-block"></div>-->
+        <!--<div id="btnGuardar" class="d-block d-sm-inline-block"></div>-->
+    </div>
+</div>

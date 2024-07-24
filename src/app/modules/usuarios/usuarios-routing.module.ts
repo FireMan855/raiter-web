@@ -6,12 +6,14 @@ import { MiCuentaPage } from './pages/mi-cuenta/mi-cuenta.page';
 import { UsuarioGuard } from '../../shared/guards/usuario-guard.service';
 import { EditarMisDatosComponent } from './pages/editar-mis-datos/editar-mis-datos.component';
 import { CambiarContraseniaPage } from './pages/cambiar-contrasenia/cambiar-contrasenia.page';
+import { DetallesUsuarioPage } from './pages/detalles-usuario/detalles-usuario.page';
 
 const routes: Routes = [
   { path: '', component: UsuariosAdministracionComponent, title: 'Administración de usuarios', data : {roles : [RolesStrings.Administrador]}, canActivate: [UsuarioGuard]},
   { path: 'MiCuenta', component: MiCuentaPage, title: 'Mi cuenta'},
   { path: 'EditarMisDatos', component: EditarMisDatosComponent, title: 'Editar mis datos'},
-  { path: 'CambiarMiContrasenia', component: CambiarContraseniaPage, title: 'Cambiar contraseña'}
+  { path: 'CambiarMiContrasenia', component: CambiarContraseniaPage, title: 'Cambiar contraseña'},
+  { path: 'Detalles/:id', component: DetallesUsuarioPage, title: 'Detalles de usuario', data : {roles : [RolesStrings.Administrador]}, canActivate: [UsuarioGuard]}
 ];
 
 @NgModule({

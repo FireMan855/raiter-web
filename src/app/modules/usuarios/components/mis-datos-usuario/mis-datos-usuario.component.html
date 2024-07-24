@@ -31,6 +31,13 @@
 </div>
 <div class="row mt-2">
     <div class="col text-center">
-        <dx-button icon="fas fa-scroll" text="Subir constancia de situación fiscal" type="default"></dx-button>
+        <dx-button icon="fas fa-scroll" text="Subir constancia de situación fiscal" type="default"
+        (onClick)="mostrarConstanciaFiscal()"></dx-button>
     </div>
 </div>
+<dx-popup [deferRendering]="false" title="Constancia de situación fiscal" [showTitle]="true"
+[maxWidth]="768" height="auto" [(visible)]="popUpConstanciaOptions.visible">
+<div *dxTemplate="let data of 'content'">
+    <app-subir-constancia-situacion-fiscal></app-subir-constancia-situacion-fiscal>
+</div>
+</dx-popup>

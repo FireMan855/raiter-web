@@ -2149,6 +2149,182 @@ export class ChoferImagenClient {
 @Injectable({
     providedIn: 'root'
 })
+export class ConstanciaSituacionFiscalClient {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl ?? "http://localhost:57909";
+    }
+
+    subirConstanciaSituacionFiscal(constanciaFiscal: FileParameter | null | undefined, area: string): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/{area}/ConstanciaSituacionFiscal/SubirConstanciaSituacionFiscal";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (constanciaFiscal !== null && constanciaFiscal !== undefined)
+            content_.append("constanciaFiscal", constanciaFiscal.data, constanciaFiscal.fileName ? constanciaFiscal.fileName : "constanciaFiscal");
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSubirConstanciaSituacionFiscal(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSubirConstanciaSituacionFiscal(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse | null>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse | null>;
+        }));
+    }
+
+    protected processSubirConstanciaSituacionFiscal(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obtenerConstanciaActual(area: string): Observable<ObtenerConstanciaActualRespuesta> {
+        let url_ = this.baseUrl + "/{area}/ConstanciaSituacionFiscal/ObtenerConstanciaActual";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObtenerConstanciaActual(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObtenerConstanciaActual(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ObtenerConstanciaActualRespuesta>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ObtenerConstanciaActualRespuesta>;
+        }));
+    }
+
+    protected processObtenerConstanciaActual(response: HttpResponseBase): Observable<ObtenerConstanciaActualRespuesta> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ObtenerConstanciaActualRespuesta;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obtenerConstanciaActualUsuario(usuarioId: string | null | undefined, area: string): Observable<ObtenerConstanciaActualRespuesta> {
+        let url_ = this.baseUrl + "/{area}/ConstanciaSituacionFiscal/ObtenerConstanciaActualUsuario?";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        if (usuarioId !== undefined && usuarioId !== null)
+            url_ += "usuarioId=" + encodeURIComponent("" + usuarioId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObtenerConstanciaActualUsuario(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObtenerConstanciaActualUsuario(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ObtenerConstanciaActualRespuesta>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ObtenerConstanciaActualRespuesta>;
+        }));
+    }
+
+    protected processObtenerConstanciaActualUsuario(response: HttpResponseBase): Observable<ObtenerConstanciaActualRespuesta> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ObtenerConstanciaActualRespuesta;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable({
+    providedIn: 'root'
+})
 export class ContactoEmergenciaClient {
     private http: HttpClient;
     private baseUrl: string;
@@ -7042,6 +7218,114 @@ export class PagoClient {
     }
 
     protected processObtenerIngresosGrid(response: HttpResponseBase): Observable<LoadResult> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as LoadResult;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obtenerDispersionesTransportistas(options: DataSourceLoadOptions | null | undefined, area: string): Observable<LoadResult> {
+        let url_ = this.baseUrl + "/{area}/Pago/ObtenerDispersionesTransportistas?";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        if (options !== undefined && options !== null)
+            url_ += "options=" + encodeURIComponent("" + options) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObtenerDispersionesTransportistas(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObtenerDispersionesTransportistas(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<LoadResult>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<LoadResult>;
+        }));
+    }
+
+    protected processObtenerDispersionesTransportistas(response: HttpResponseBase): Observable<LoadResult> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as LoadResult;
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obtenerSolicitudesViajeDispersion(viajeId: string | undefined, options: DataSourceLoadOptions | null | undefined, area: string): Observable<LoadResult> {
+        let url_ = this.baseUrl + "/{area}/Pago/ObtenerSolicitudesViajeDispersion?";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        if (viajeId === null)
+            throw new Error("The parameter 'viajeId' cannot be null.");
+        else if (viajeId !== undefined)
+            url_ += "viajeId=" + encodeURIComponent("" + viajeId) + "&";
+        if (options !== undefined && options !== null)
+            url_ += "options=" + encodeURIComponent("" + options) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObtenerSolicitudesViajeDispersion(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObtenerSolicitudesViajeDispersion(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<LoadResult>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<LoadResult>;
+        }));
+    }
+
+    protected processObtenerSolicitudesViajeDispersion(response: HttpResponseBase): Observable<LoadResult> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -18588,6 +18872,59 @@ export class UsuarioClient {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * Reenvia el token de confirmación a e-mails no confirmados
+     */
+    reenviarConfirmacionEmailNoConfirmados(area: string): Observable<ReenviarConfirmacionEmailNoConfirmadoRespuesta[]> {
+        let url_ = this.baseUrl + "/{area}/Usuario/ReenviarConfirmacionEmailNoConfirmados";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processReenviarConfirmacionEmailNoConfirmados(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processReenviarConfirmacionEmailNoConfirmados(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ReenviarConfirmacionEmailNoConfirmadoRespuesta[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ReenviarConfirmacionEmailNoConfirmadoRespuesta[]>;
+        }));
+    }
+
+    protected processReenviarConfirmacionEmailNoConfirmados(response: HttpResponseBase): Observable<ReenviarConfirmacionEmailNoConfirmadoRespuesta[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as ReenviarConfirmacionEmailNoConfirmadoRespuesta[];
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable({
@@ -20157,6 +20494,127 @@ export class ViajeClient {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * Registra que ya se pagó al transportista su parte del viaje
+     */
+    registrarDispersionViaje(peticion: RegistrarDispersionViajePeticion, area: string): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/{area}/Viaje/RegistrarDispersionViaje";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(peticion);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRegistrarDispersionViaje(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRegistrarDispersionViaje(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse | null>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse | null>;
+        }));
+    }
+
+    protected processRegistrarDispersionViaje(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    obtenerDispersionViaje(viajeId: string | undefined, area: string): Observable<FileResponse | null> {
+        let url_ = this.baseUrl + "/{area}/Viaje/ObtenerDispersionViaje?";
+        if (area === undefined || area === null)
+            throw new Error("The parameter 'area' must be defined.");
+        url_ = url_.replace("{area}", encodeURIComponent("" + area));
+        if (viajeId === null)
+            throw new Error("The parameter 'viajeId' cannot be null.");
+        else if (viajeId !== undefined)
+            url_ += "viajeId=" + encodeURIComponent("" + viajeId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "application/octet-stream"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processObtenerDispersionViaje(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processObtenerDispersionViaje(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<FileResponse | null>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<FileResponse | null>;
+        }));
+    }
+
+    protected processObtenerDispersionViaje(response: HttpResponseBase): Observable<FileResponse | null> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
+            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
+            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
+            if (fileName) {
+                fileName = decodeURIComponent(fileName);
+            } else {
+                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            }
+            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 export interface ObtenerCategoriasViajePadreRespuesta {
@@ -20531,6 +20989,7 @@ export interface ObtenerUsuariosRespuesta {
     EstaActivo: boolean;
     TransportistaId?: string | undefined;
     Transportista?: ObtenerUsuariosTrasnportisaRespuesta | undefined;
+    TieneConstanciaFiscal: boolean;
 }
 
 export interface ObtenerUsuariosTrasnportisaRespuesta {
@@ -20606,6 +21065,13 @@ export interface ChoferImagenRespuesta {
     NombreArchivo?: string | undefined;
     /** Imagen en formato base64 para visualizarlo en el formulario. */
     ImagenBase64?: string | undefined;
+}
+
+export interface ObtenerConstanciaActualRespuesta {
+    Base64?: string | undefined;
+    NombreArchivo?: string | undefined;
+    Extension?: string | undefined;
+    ExisteArchivo: boolean;
 }
 
 export interface ContactoEmergenciaRespuesta {
@@ -22396,6 +22862,7 @@ export enum EntidadCancelo {
 export interface ObtenerNegociacionesRespuesta {
     FechaSalidaViaje: string;
     EstadoViaje: EstadoViaje;
+    ViajeNegociable: boolean;
     EstadoSolicitudViaje: EstadoSolicitudViaje;
     Negociaciones?: ObtenerSolititudViajeNegociacion[] | undefined;
     /** Indicador para determinar si el usuario puede registrar la primera negociación */
@@ -22927,6 +23394,12 @@ export interface ConfirmarEmailRespuesta {
     Email?: string | undefined;
 }
 
+export interface ReenviarConfirmacionEmailNoConfirmadoRespuesta {
+    Email?: string | undefined;
+    Enviado: boolean;
+    MensajeError?: string | undefined;
+}
+
 export interface RegistrarViajePeticion {
     Clave?: string | undefined;
     Alias?: string | undefined;
@@ -23275,6 +23748,11 @@ export interface NotificarPosicionTrasportePeticion {
     Latitud: number;
     Longitud: number;
     ViajeId: string;
+}
+
+export interface RegistrarDispersionViajePeticion {
+    ViajeId: string;
+    FechaDispersion: string;
 }
 
 export interface Filter {
