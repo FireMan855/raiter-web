@@ -5789,7 +5789,7 @@ export class FirebaseNotificacionClient {
     /**
      * Devuelve las ultima 5 notificaciones recibidas para el usuario logeado
      */
-    obtenerUltimasNotificaciones(area: string): Observable<FileResponse | null> {
+    obtenerUltimasNotificaciones(area: string): Observable<FirebaseNotificacionRespuesta[]> {
         let url_ = this.baseUrl + "/{area}/FirebaseNotificacion/ObtenerUltimasNotificaciones";
         if (area === undefined || area === null)
             throw new Error("The parameter 'area' must be defined.");
@@ -5800,7 +5800,7 @@ export class FirebaseNotificacionClient {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "application/octet-stream"
+                "Accept": "application/json"
             })
         };
 
@@ -5811,31 +5811,26 @@ export class FirebaseNotificacionClient {
                 try {
                     return this.processObtenerUltimasNotificaciones(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<FileResponse | null>;
+                    return _observableThrow(e) as any as Observable<FirebaseNotificacionRespuesta[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<FileResponse | null>;
+                return _observableThrow(response_) as any as Observable<FirebaseNotificacionRespuesta[]>;
         }));
     }
 
-    protected processObtenerUltimasNotificaciones(response: HttpResponseBase): Observable<FileResponse | null> {
+    protected processObtenerUltimasNotificaciones(response: HttpResponseBase): Observable<FirebaseNotificacionRespuesta[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
             (response as any).error instanceof Blob ? (response as any).error : undefined;
 
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers.get("content-disposition") : undefined;
-            let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
-            let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
-            if (fileName) {
-                fileName = decodeURIComponent(fileName);
-            } else {
-                fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            }
-            return _observableOf({ fileName: fileName, data: responseBlob as any, status: status, headers: _headers });
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as FirebaseNotificacionRespuesta[];
+            return _observableOf(result200);
+            }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);

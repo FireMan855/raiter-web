@@ -13,7 +13,6 @@ import { UsuarioRaiterState } from '../../store/usuario-raiter/UsuarioRaiterStat
   styleUrl: './main-layout.component.css'
 })
 export class MainLayoutComponent implements OnInit {
-  numNotificacionesNoLeidas: number = 0;
   usuarioRaiter? : UsuarioRaiterState;
   private readonly sidebarClass = 'sidebar-icon-only';
   @ViewChild(MainMenuComponent) private readonly mainMenu!: MainMenuComponent

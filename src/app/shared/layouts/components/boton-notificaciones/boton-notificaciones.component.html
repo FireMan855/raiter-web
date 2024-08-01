@@ -1,0 +1,58 @@
+<a class="nav-link count-indicator" id="notificaciones" href="#" data-toggle="dropdown">
+    <i class="fas fa-bell"></i>
+    <span class="count bg-danger" id="spanCountNotificaciones">{{ numNotificacionesNoLeidas() }}</span>
+</a>
+<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="notificaciones"
+    id="divNotificaciones">
+    <dx-scroll-view [height]="350">
+        <a class="dropdown-item py-3 border-bottom" routerLink="/Usuarios/MisNotificaciones">
+            <p class="mb-0 font-weight-medium float-left">Notificaciones </p>
+            <span class="badge badge-pill badge-primary float-right">Ver todas</span>
+        </a>
+        @for(notificacion of notificaciones(); track notificacion){
+        <a class="dropdown-item preview-item py-3">
+            <div class="preview-thumbnail">
+                @if(notificacion.Leida){
+                <i class="fas fa-envelope-open m-auto text-secondary"></i>
+                }
+                @else{
+                <i class="fas fa-envelope m-auto text-primary"></i>
+                }
+            </div>
+            <div class="preview-item-content">
+                <h6 class="preview-subject font-weight-normal text-dark mb-1">{{ notificacion.Titulo}}</h6>
+                <p class="font-weight-light small-text font-italic mb-0"> {{notificacion.FechaRegistro | dateFromNow}}
+                </p>
+            </div>
+        </a>
+        }
+    </dx-scroll-view>
+
+    <!--<a class="dropdown-item preview-item py-3">
+            <div class="preview-thumbnail">
+                <i class="mdi mdi-alert m-auto text-primary"></i>
+            </div>
+            <div class="preview-item-content">
+                <h6 class="preview-subject font-weight-normal text-dark mb-1">Application Error</h6>
+                <p class="font-weight-light small-text mb-0"> Just now </p>
+            </div>
+        </a>
+        <a class="dropdown-item preview-item py-3">
+            <div class="preview-thumbnail">
+                <i class="mdi mdi-settings m-auto text-primary"></i>
+            </div>
+            <div class="preview-item-content">
+                <h6 class="preview-subject font-weight-normal text-dark mb-1">Settings</h6>
+                <p class="font-weight-light small-text mb-0"> Private message </p>
+            </div>
+        </a>
+        <a class="dropdown-item preview-item py-3">
+            <div class="preview-thumbnail">
+                <i class="mdi mdi-airballoon m-auto text-primary"></i>
+            </div>
+            <div class="preview-item-content">
+                <h6 class="preview-subject font-weight-normal text-dark mb-1">New user registration</h6>
+                <p class="font-weight-light small-text mb-0"> 2 days ago </p>
+            </div>
+        </a>-->
+</div>

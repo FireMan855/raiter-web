@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateFromNowPipe implements PipeTransform {
 
-  transform(date: Date, ...args: unknown[]): unknown {
+  transform(date: Date | string, ...args: unknown[]): unknown {
     const now = new Date();
     const past = new Date(date);
     const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000);

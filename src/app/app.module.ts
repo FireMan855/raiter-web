@@ -17,6 +17,7 @@ import { DxLoadPanelModule } from 'devextreme-angular';
 import { usuarioReducer } from './shared/store/usuario-raiter/usuario-raiter.reducers';
 import { UsuarioStateService } from './shared/services/usuario-state.service';
 import { LoadPanelGeneralComponent } from './shared/components/load-panel-general/load-panel-general.component';
+import { BotonNotificacionesComponent } from "./shared/layouts/components/boton-notificaciones/boton-notificaciones.component";
 
 @NgModule({
   declarations: [
@@ -32,8 +33,9 @@ import { LoadPanelGeneralComponent } from './shared/components/load-panel-genera
     HttpClientModule,
     DxLoadPanelModule,
     LoadPanelGeneralComponent,
-    StoreModule.forRoot({ loadPanelGeneral: loadPanelReducer, usuario: usuarioReducer})
-  ],
+    StoreModule.forRoot({ loadPanelGeneral: loadPanelReducer, usuario: usuarioReducer }),
+    BotonNotificacionesComponent
+],
   providers: [{
     provide: TitleStrategy,
     useClass: TituloPaginaService

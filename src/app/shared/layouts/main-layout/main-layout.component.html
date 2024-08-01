@@ -100,7 +100,8 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link count-indicator" id="notificaciones" href="#" data-toggle="dropdown">
+                    <app-boton-notificaciones></app-boton-notificaciones>
+                    <!--<a class="nav-link count-indicator" id="notificaciones" href="#" data-toggle="dropdown">
                         <i class="fas fa-bell"></i>
                         <span class="count bg-danger" id="spanCountNotificaciones">{{ numNotificacionesNoLeidas }}</span>
                     </a>
@@ -139,7 +140,7 @@
                                     <p class="font-weight-light small-text mb-0"> 2 days ago </p>
                                 </div>
                             </a>
-                    </div>
+                    </div>-->
                 </li>
             <!--}-->
             <app-logged-user [nombreUsuario]="usuarioRaiter?.NombreUsuario"></app-logged-user>
