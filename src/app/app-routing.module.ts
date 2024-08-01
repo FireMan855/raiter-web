@@ -55,6 +55,12 @@ const routes: Routes = [
     component: MainLayoutComponent,
     loadChildren: () => import('../app/modules/transportistas/transportistas.module').then(m => m.TransportistasModule),
     canMatch: [UsuarioGuard]
+  },
+  {
+    path: 'UnidadTransporte',
+    component: MainLayoutComponent,
+    loadChildren: () => import('../app/modules/unidades-transporte/unidades-transporte.module').then(m => m.UnidadesTransporteModule),
+    canMatch: [UsuarioGuard]
   }
   /*{
     path:'',
