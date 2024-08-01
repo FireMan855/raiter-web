@@ -49,6 +49,12 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/categorias-viaje/categorias-viaje.module').then(m => m.CategoriasViajeModule),
     data: { roles: [RolesStrings.Administrador] },
     canMatch: [UsuarioGuard]
+  },
+  {
+    path: 'Transportista',
+    component: MainLayoutComponent,
+    loadChildren: () => import('../app/modules/transportistas/transportistas.module').then(m => m.TransportistasModule),
+    canMatch: [UsuarioGuard]
   }
   /*{
     path:'',

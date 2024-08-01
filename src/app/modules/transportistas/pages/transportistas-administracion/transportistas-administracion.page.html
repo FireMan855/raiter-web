@@ -1,0 +1,96 @@
+<div class="card">
+    <div class="card-header">
+        <h4><i class="fas fa-cog fa-fw"></i> Administración de transportistas</h4>
+    </div>
+    <div class="card-body">
+        <dx-data-grid [remoteOperations]="true" [allowColumnResizing]="true" [columnHidingEnabled]="true"
+            [rowAlternationEnabled]="true" [dataSource]="dataSource" (onContentReady)="dxDataGridOptions.onContentReady($event)"
+            (onRowPrepared)="dxDataGridOptions.onRowPrepared($event)" (onExporting)="dxDataGridOptions.onExporting($event)">
+            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+            <dxo-search-panel [visible]="true" applyFilter="auto"></dxo-search-panel>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[20, 50, 100]" [showInfo]="true"></dxo-pager>
+            <dxo-selection mode="multiple" [allowSelectAll]="true" selectAllMode="page"
+                showCheckBoxesMode="onClick"></dxo-selection>
+            <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxi-column dataField="FechaRegistro" caption="Fecha de registro" dataType="datetime"
+                format="dd/MM/yyyy HH:mm" sortOrder="desc" [hidingPriority]="10" [width]="140"></dxi-column>
+            <dxi-column dataField="Nombre" caption="Nombre(s)" dataType="string" [width]="155"
+                [hidingPriority]="12"></dxi-column>
+            <dxi-column dataField="Paterno" caption="A. Paterno" dataType="string" [width]="150"
+                [hidingPriority]="6"></dxi-column>
+            <dxi-column dataField="Materno" caption="A. Materno" dataType="string" [width]="150"
+                [hidingPriority]="5"></dxi-column>
+            <dxi-column dataField="RazonSocial" caption="Razón social" dataType="string" [width]="200"
+                [hidingPriority]="8"></dxi-column>
+            <dxi-column dataField="Rfc" dataType="string" [width]="200" [hidingPriority]="7"></dxi-column>
+            <dxi-column dataField="Email" caption="E-mail" dataType="string" [width]="200"
+                [hidingPriority]="9"></dxi-column>
+            <dxi-column dataField="Telefono" caption="Teléfono" dataType="string" [hidingPriority]="3"></dxi-column>
+            <dxi-column dataField="EstadoVerificacionString" caption="Estado" dataType="string" [width]="120"
+                [hidingPriority]="11">
+                <dxo-lookup
+                [dataSource]="estadosTransportistaDataSource"
+                valueExpr="Descripcion" 
+                displayExpr="Descripcion"> </dxo-lookup>
+            </dxi-column>
+            <dxi-column dataField="FechaActualizacionEstadoVerificacion" caption="Fecha última verificación"
+                dataType="datetime" format="dd/MM/yyyy HH:mm" [hidingPriority]="2"></dxi-column>
+            <dxi-column dataField="ComentariosVerificacion" caption="Comentarios última verificación" dataType="string"
+                [hidingPriority]="1"></dxi-column>
+            <dxi-column dataField="EstaActivo" caption="¿Activo?" dataType="boolean" falseText="NO" trueText="SI"
+                [showEditorAlways]="false" [hidingPriority]="4"></dxi-column>
+            <dxi-column caption="OPC" name="opciones" [allowExporting]="false" [allowFiltering]="false"
+                [allowResizing]="false" [allowSorting]="false" [width]="50" type="buttons">
+                <dxi-button icon="menu" [onClick]="dxDataGridOptions.onOpcClick"></dxi-button>
+            </dxi-column>
+            <dxo-toolbar>
+                <dxi-item location="before">
+                    <div *dxTemplate class="informer">
+                        <h2 class="count">{{dxDataGridOptions.totalCount}}</h2>
+                        <span class="name">Registros</span>
+                    </div>
+                </dxi-item>
+                <dxi-item locateInMenu="auto" location="after" showText="inMenu">
+                    <div *dxTemplate>
+                        <dx-button text="Recargar" icon="fa-solid fa-sync" hint="Recargar"
+                            (onClick)="dataSource.reload()"></dx-button>
+                    </div>
+                </dxi-item>
+                <dxi-item name="exportButton"></dxi-item>
+                <dxi-item name="columnChooserButton"></dxi-item>
+                <dxi-item name="searchPanel"></dxi-item>
+            </dxo-toolbar>
+            <dxo-master-detail [enabled]="true" template="detail">
+            </dxo-master-detail>
+                <div *dxTemplate="let options of 'detail'">
+                    <h5 class="mb-2"><i class="fas fa-caret-down"></i> Choferes ({{options.data.RazonSocial}})</h5>
+                    <dx-data-grid [dataSource]="options.data.Choferes" [allowColumnResizing]="true"
+                    [columnAutoWidth]="true" [showBorders]="true" [rowAlternationEnabled]="true"
+                    noDataText="No hay choferes">
+                    <dxo-filter-row [visible]="true" applyFilter="auto"></dxo-filter-row>
+                    <dxi-column dataField="FechaRegistro" caption="Fecha de registro" dataType="datetime" format="dd/MM/yyyy HH:mm" sortOrder="desc"></dxi-column>
+                    <dxi-column dataField="Nombre" caption="Nombre(s)" dataType="string" [width]="200"></dxi-column>
+                    <dxi-column dataField="Paterno" caption="A. Paterno" dataType="string" [width]="200" [hidingPriority]="3"></dxi-column>
+                    <dxi-column dataField="Materno" caption="A. Materno" dataType="string" [width]="200" [hidingPriority]="2"></dxi-column>
+                    <dxi-column dataField="CorreoElectronico" caption="E-mail" dataType="string" [hidingPriority]="1"></dxi-column>
+                    <dxi-column dataField="Telefono" caption="Teléfono" dataType="string" [width]="100" [hidingPriority]="4"></dxi-column>
+                    <dxi-column dataField="EstaVerificado" caption="¿Validado?" dataType="boolean" falseText="NO"
+                    trueText="SI" [showEditorAlways]="false" [width]="110" [hidingPriority]="5"></dxi-column>
+                    <!--<dxi-column caption="OPC" name="opciones" [allowExporting]="false" [allowFiltering]="false"
+                        [allowResizing]="false" [allowSorting]="false" [showInColumnChooser]="false" [width]="50"
+                        cellTemplate="cellTemplate">
+                        <div *dxTemplate="let data of 'cellTemplate'">
+                            <dx-button height="25" icon="menu" (onClick)="dxDataGridChildOptions.onOpcClick(data, options.data)"></dx-button>
+                        </div>
+                    </dxi-column>-->
+                </dx-data-grid>
+                </div>
+        </dx-data-grid>
+        <dx-action-sheet [items]="dxActionSheetOptions.items" [title]="dxActionSheetOptions.title"
+        [usePopover]="dxActionSheetOptions.usePopover" [(visible)]="dxActionSheetOptions.visible"
+        [target]="dxActionSheetOptions.target" (onItemClick)="dxActionSheetOptions.onItemClick($event)"
+        >
+    </dx-action-sheet>
+    </div>
+</div>
